@@ -20,12 +20,12 @@ class SalaryManager extends Component
 
     public function render()
     {
-        //sleep(3);
-        // $salaries = Salary::where('driver_id', Auth::user()->id)->orderByDesc('event_date')->simplePaginate(5, pageName: 'salaries');
         $salaries = Salary::where('driver_id', Auth::user()->id)
+            ->where('profit_id', 0)
             ->with('driver')
-            ->with('log')->orderByDesc('date')->get();
-
+            //->with('log')
+            ->orderByDesc('date')
+            ->get();
         return view('livewire.salary.salary-manager', ['salaries' => $salaries]);
     }
 

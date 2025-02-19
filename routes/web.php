@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\SalaryContriller;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Salary\SalaryManager;
 
 Route::view('/', 'welcome');
 
@@ -23,8 +23,8 @@ Route::name('salary.')
     // ->namespace('Salary')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-        Route::get('', SalaryManager::class)->name('list');
-        // Route::get('', [SalaryController::class, 'index'])->name('list');
+        //Route::get('', SalaryManager::class)->name('list');
+        Route::get('', [SalaryContriller::class, 'index'])->name('list');
         // Route::get('/archive', [SalaryController::class, 'archive'])->name('archive');
         // Route::get('/create', [SalaryController::class, 'create'])->name('create');
         // Route::post('/store', [SalaryController::class, 'store'])->name('store');

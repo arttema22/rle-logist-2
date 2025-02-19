@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Salary extends Model
 {
+    //use HasChangeLog;
+
     protected $fillable = [
         'date',
         'owner_id',
