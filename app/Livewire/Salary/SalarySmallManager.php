@@ -10,7 +10,7 @@ use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Auth;
 
 #[Lazy]
-class SalaryManager extends Component
+class SalarySmallManager extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
@@ -26,7 +26,7 @@ class SalaryManager extends Component
             ->with('log')
             ->orderByDesc('date')
             ->get();
-        return view('livewire.salary.salary-manager', ['salaries' => $salaries]);
+        return view('livewire.salary.salary-small-manager', ['salaries' => $salaries]);
     }
 
     public function placeholder()

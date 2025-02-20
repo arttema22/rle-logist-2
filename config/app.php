@@ -68,6 +68,15 @@ return [
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
+      |--------------------------------------------------------------------------
+      | Application Date Format
+      |--------------------------------------------------------------------------
+     */
+    'date_format' => env('APP_DATE_FORMAT', 'd.m.Y'),
+    'date_full_format' => env('APP_DATE_FULL_FORMAT', 'd.m.Y в H:i'),
+    'date_format_db' => env('APP_DATE_FORMAT_DB', 'Y-m-d'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
