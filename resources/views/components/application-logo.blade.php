@@ -4,7 +4,7 @@
 </svg> --}}
 
 {{-- <svg width="637" height="710" viewBox="0 0 637 710" fill="none" version="1.1" id="svg184" --}}
-<svg width="116" height="116" viewBox="0 0 316 316" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
+<svg viewBox="0 0 637 710" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
     sodipodi:docname="logo-small.svg" inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink"

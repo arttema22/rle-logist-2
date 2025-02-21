@@ -2,9 +2,12 @@
 
 return [
     'title' => [
+        'dashboard' => 'Dashboard',
         'salaries' => 'Salaries',
         'create_new_salary' => 'Create new salary',
         'edit_salary' => 'Edit salary',
+        'refillings' => 'Refillings',
+        'routes' => 'Routes',
     ],
 
     'field' => [
@@ -25,6 +28,6 @@ return [
 
     'text' => [
         'showing_last_3_records' => 'Showing last 3 records',
-        'show_all_salaries' => 'Show all salaries',
+        'show_all_records' => 'Show all records',
     ],
 ];

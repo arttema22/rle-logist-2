@@ -24,7 +24,7 @@ class SalarySmallManager extends Component
         $salaries = Salary::where('driver_id', Auth::user()->id)
             ->where('profit_id', 0)
             ->with('driver')
-            ->with('log')
+            //->with('log')
             ->orderByDesc('date')
             ->take(3)
             ->get();

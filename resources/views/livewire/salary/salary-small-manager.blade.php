@@ -81,7 +81,7 @@
     <div class="px-6 py-4">
         {{ __('ui.text.showing_last_3_records') }}
         <x-nav-link :href="route('salary.list')" :active="request()->routeIs('salary.list')" wire:navigate>
-            {{ __('ui.text.show_all_salaries') }}
+            {{ __('ui.text.show_all_records') }}
         </x-nav-link>
     </div>
 

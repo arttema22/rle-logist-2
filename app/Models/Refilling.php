@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Dir\DirPetrolStation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +21,21 @@ class Refilling extends Model
         'comment',
         'status',
     ];
+
+    public function getFormatDateAttribute()
+    {
+        return Carbon::parse($this->date)->format(config('app.date_format'));
+    }
+
+    public function getCreatedAttribute()
+    {
+        return Carbon::parse($this->created_at)->format(config('app.date_full_format'));
+    }
+
+    public function getUpdatedAttribute()
+    {
+        return Carbon::parse($this->updated_at)->format(config('app.date_full_format'));
+    }
 
     public function driver(): BelongsTo
     {

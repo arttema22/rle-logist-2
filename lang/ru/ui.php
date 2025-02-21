@@ -2,9 +2,12 @@
 
 return [
     'title' => [
+        'dashboard' => 'Панель',
         'salaries' => 'Выплаты',
         'create_new_salary' => 'Новая выплата',
         'edit_salary' => 'Изменение выплаты',
+        'refillings' => 'Заправки',
+        'routes' => 'Маршруты',
     ],
 
     'field' => [
@@ -25,6 +28,6 @@ return [
 
     'text' => [
         'showing_last_3_records' => 'Показаны последние 3 записи',
-        'show_all_salaries' => 'Посмотреть все записи',
+        'show_all_records' => 'Посмотреть все записи',
     ],
 ];
