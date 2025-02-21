@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-white dark:bg-gray-900">
         <livewire:layout.navigation />
 
         <!-- Page Heading -->
@@ -30,7 +30,7 @@
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             {{ $slot }}
         </main>
     </div>

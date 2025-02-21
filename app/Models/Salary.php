@@ -29,21 +29,15 @@ class Salary extends Model
         return Carbon::parse($this->date)->format(config('app.date_format'));
     }
 
-    // protected function createdAt(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn(string $value) => Carbon::parse($value)
-    //             ->format(config('app.date_full_format')),
-    //     );
-    // }
+    public function getCreatedAttribute()
+    {
+        return Carbon::parse($this->created_at)->format(config('app.date_full_format'));
+    }
 
-    // protected function updatedAt(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn(string $value) => Carbon::parse($value)
-    //             ->format(config('app.date_full_format')),
-    //     );
-    // }
+    public function getUpdatedAttribute()
+    {
+        return Carbon::parse($this->updated_at)->format(config('app.date_full_format'));
+    }
 
     public function driver(): BelongsTo
     {

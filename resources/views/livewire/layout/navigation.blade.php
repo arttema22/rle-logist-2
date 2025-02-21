@@ -34,7 +34,7 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('salary.list')" :active="request()->routeIs('salary.list')" wire:navigate>
-                        {{ __('salaries') }}
+                        {{ __('ui.title.salaries') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -98,7 +98,7 @@ new class extends Component
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('salary.list')" :active="request()->routeIs('salary.list')"
                 wire:navigate>
-                {{ __('salaries') }}
+                {{ __('ui.title.salaries') }}
             </x-responsive-nav-link>
         </div>
 
