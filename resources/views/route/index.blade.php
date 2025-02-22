@@ -5,4 +5,6 @@
         </h2>
     </x-slot>
 
+    @livewire('route.route-manager')
+
 </x-app-layout>
