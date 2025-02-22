@@ -5,4 +5,6 @@
         </h2>
     </x-slot>
 
+    @livewire('refilling.refilling-manager')
+
 </x-app-layout>
