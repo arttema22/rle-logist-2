@@ -8,6 +8,8 @@ return [
         'edit_salary' => 'Изменение выплаты',
         'refillings' => 'Заправки',
         'routes' => 'Маршруты',
+        'profile' => 'Профиль',
+        'log_out' => 'Выход',
     ],
 
     'field' => [

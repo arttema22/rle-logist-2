@@ -8,6 +8,8 @@ return [
         'edit_salary' => 'Edit salary',
         'refillings' => 'Refillings',
         'routes' => 'Routes',
+        'profile' => 'Profile',
+        'log_out' => 'Log Out',
     ],
 
     'field' => [

@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'last_name',
+        'first_name',
+        'sec_name',
+        'phone',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->last_name} {$this->first_name} {$this->sec_name}";
