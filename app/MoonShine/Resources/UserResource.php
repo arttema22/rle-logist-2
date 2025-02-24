@@ -11,7 +11,6 @@ use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
 use App\MoonShine\Pages\User\UserFormPage;
 use App\MoonShine\Pages\User\UserIndexPage;
-use App\MoonShine\Pages\User\UserDetailPage;
 use MoonShine\Laravel\Resources\ModelResource;
 
 #[Icon('users')]
@@ -41,7 +40,6 @@ class UserResource extends ModelResource
         return [
             UserIndexPage::class,
             UserFormPage::class,
-            UserDetailPage::class,
         ];
     }
 
@@ -61,5 +59,24 @@ class UserResource extends ModelResource
                 : 'required|min:6|required_with:password_repeat|same:password_repeat',
 
         ];
+    }
+
+    protected function beforeCreating(mixed $item): mixed
+    {
+        $item->role_id = 2;
+        return $item;
+    }
+
+    protected function afterCreated(mixed $item): mixed
+    {
+        $item->profile()->create([
+            'last_name' => ' ',
+            'first_name' => ' ',
+            //  'sec_name' => '',
+            //  'phone' => '',
+            'status' => 1,
+        ]);
+
+        return $item;
     }
 }

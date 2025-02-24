@@ -25,6 +25,7 @@ use App\MoonShine\Resources\RouteResource;
 use App\MoonShine\Resources\ServiceResource;
 use App\MoonShine\Resources\ProfitResource;
 use App\MoonShine\Resources\RealtimeProfitResource;
+use App\MoonShine\Resources\ProfileResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -55,6 +56,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 ServiceResource::class,
                 ProfitResource::class,
                 RealtimeProfitResource::class,
+                ProfileResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
