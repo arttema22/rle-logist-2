@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\RealtimeProfit;
 
-use App\MoonShine\Resources\RefillingResource;
-use App\MoonShine\Resources\SalaryResource;
 use Throwable;
+use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
+use MoonShine\Support\AlpineJs;
+use MoonShine\Support\Enums\JsEvent;
 use MoonShine\Contracts\UI\FieldContract;
+use MoonShine\UI\Components\CardsBuilder;
+use App\MoonShine\Resources\SalaryResource;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
+use App\MoonShine\Resources\RefillingResource;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
-use MoonShine\UI\Fields\Date;
 
 class RealtimeProfitIndexPage extends IndexPage
 {
-    /**
-     * @return list<ComponentContract|FieldContract>
-     */
+
     protected function fields(): iterable
     {
         return [
@@ -32,15 +33,15 @@ class RealtimeProfitIndexPage extends IndexPage
                 Text::make('salary'),
                 Text::make('comment'),
             ]),
-            HasMany::make(
-                'refillings',
-                'refillings',
-                resource: RefillingResource::class
-            )->fields([
-                Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
-                Text::make('cost_car_refueling'),
-                Text::make('comment'),
-            ]),
+            // HasMany::make(
+            //     'refillings',
+            //     'refillings',
+            //     resource: RefillingResource::class
+            // )->fields([
+            //     Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
+            //     Text::make('cost_car_refueling'),
+            //     Text::make('comment'),
+            // ]),
         ];
     }
 

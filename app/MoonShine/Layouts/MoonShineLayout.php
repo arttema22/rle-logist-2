@@ -45,10 +45,8 @@ use App\MoonShine\Resources\SalaryResource;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\RefillingResource;
 use App\MoonShine\Resources\RouteResource;
-use App\MoonShine\Resources\ServiceResource;
 use App\MoonShine\Resources\ProfitResource;
 use App\MoonShine\Resources\RealtimeProfitResource;
-use App\MoonShine\Resources\ProfileResource;
 
 final class MoonShineLayout extends AppLayout
 {

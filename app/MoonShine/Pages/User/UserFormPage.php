@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\User;
 
+use App\Models\Profile;
 use Throwable;
+use App\Models\User;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Email;
-use MoonShine\UI\Fields\Phone;
 use MoonShine\UI\Fields\Password;
+use MoonShine\UI\Fields\Template;
 use MoonShine\UI\Components\Collapse;
+use MoonShine\UI\Components\Components;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\PasswordRepeat;
 use MoonShine\UI\Components\Layout\Flex;
@@ -17,7 +20,6 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use App\MoonShine\Resources\ProfileResource;
 use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\Laravel\Fields\Relationships\HasOne;
 
 class UserFormPage extends FormPage
 {
@@ -41,7 +43,23 @@ class UserFormPage extends FormPage
                         ->customAttributes(['autocomplete' => 'confirm-password'])
                         ->eye(),
                 ])->icon('lock-closed'),
-                HasOne::make('profile', resource: ProfileResource::class),
+
+                Template::make('Test')
+                    ->changeFill(fn(User $data) => $data->profile)
+                    ->changePreview(fn($data) => $data?->id ?? '-')
+                    ->fields(app(ProfileResource::class)->getFormFields())
+                    ->changeRender(function (?Profile $data, Template $field) {
+                        $fields = $field->getPreparedFields();
+                        $fields->fill($data?->toArray() ?? []);
+
+                        return Components::make($fields);
+                    })
+                    ->onAfterApply(function (User $item, array $value) {
+                        $item->profile()->updateOrCreate([
+                            // 'id' => $value['id']
+                        ], $value);
+                        return $item;
+                    }),
             ]),
         ];
     }
