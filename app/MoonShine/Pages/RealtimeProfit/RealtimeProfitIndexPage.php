@@ -23,7 +23,7 @@ class RealtimeProfitIndexPage extends IndexPage
     protected function fields(): iterable
     {
         return [
-            Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')->sortable(),
+            //Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')->sortable(),
             HasMany::make(
                 'salaries',
                 'salaries',

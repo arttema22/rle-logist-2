@@ -39,7 +39,7 @@ class RealtimeProfitResource extends ModelResource
             ->async()
             //->overlay()
             ->title('profile.SurnameInitials')
-            ->subtitle('email')
+            //->subtitle('email')
             //->url(fn($user) => $this->getFormPageUrl($user->getKey()))
             //->thumbnail(fn($user) => asset($user->avatar))
             ->buttons($this->getIndexButtons());
