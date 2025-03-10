@@ -8,6 +8,8 @@ use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Components\Alert;
+use MoonShine\UI\Components\Heading;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -39,10 +41,12 @@ class RefillingIndexPage extends IndexPage
     protected function topLayer(): array
     {
         return [
-            ...parent::topLayer()
+            ...parent::topLayer(),
+            Alert::make(type: 'warning')->content('Внимание, изменения в системе! Большинство записей о заправке поступает в
+            систему автоматически. Обмен данными происходит каждые 5 минут.<br>
+                Делайте запись о заправке после того, как убедитесь, что ее нет в системе.'),
         ];
     }
-
     /**
      * @return list<ComponentContract>
      * @throws Throwable

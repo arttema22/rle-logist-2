@@ -13,6 +13,7 @@ use MoonShine\Support\Attributes\Icon;
 use MoonShine\UI\Components\CardsBuilder;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Laravel\Resources\ModelResource;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitFormPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
@@ -21,6 +22,29 @@ use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
 class RealtimeProfitResource extends ModelResource
 {
     protected string $model = User::class;
+
+    protected array $with = ['profile'];
+
+    // public function query(): Builder
+    // {
+
+    //  dd($this->model);
+    // if (Auth::user()->moonshine_user_role_id == 3)
+    //     return parent::query()
+    //         ->where('driver_id', Auth::user()->id)
+    //         ->with('driver');
+
+    //  return parent::query()->with('profile');
+    // return parent::query();
+    // }
+
+    // protected function modifyQueryBuilder(Builder $builder): Builder
+    // {
+    //     //dd($builder->where('status', true)->toSql());
+    //     return $builder->where('status', true)
+    //         ->where('role_id', 2)
+    //         ->orderByDesc('name');
+    // }
 
     protected string $title = 'RealtimeProfits';
 
@@ -39,7 +63,7 @@ class RealtimeProfitResource extends ModelResource
             ->async()
             //->overlay()
             ->title('profile.SurnameInitials')
-            //->subtitle('email')
+            ->subtitle('email')
             //->url(fn($user) => $this->getFormPageUrl($user->getKey()))
             //->thumbnail(fn($user) => asset($user->avatar))
             ->buttons($this->getIndexButtons());

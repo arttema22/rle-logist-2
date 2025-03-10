@@ -137,6 +137,7 @@ return [
         'sum_accrual' => 'Sum Accrual',
         'sum_amount' => 'Sum Amount',
         'saldo_end' => 'Saldo End',
+        'e1_card' => 'e1 card',
     ],
 
     'title' => [

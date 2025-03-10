@@ -137,6 +137,7 @@ return [
         'sum_accrual' => 'Sum Accrual',
         'sum_amount' => 'Amount',
         'saldo_end' => 'Сальдо конечное',
+        'e1_card' => 'e1 карта',
     ],
 
     'title' => [

@@ -17,6 +17,7 @@ class Refilling extends Model
         'num_liters_car_refueling',
         'price_car_refueling',
         'cost_car_refueling',
+        'integration_id',
         'profit_id',
         'comment',
         'status',

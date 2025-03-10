@@ -13,6 +13,7 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\UI\Components\Heading;
 
 class RefillingFormPage extends FormPage
 {
@@ -30,8 +31,8 @@ class RefillingFormPage extends FormPage
                 resource: UserResource::class
             )->translatable('moonshine::ui.field'),
             Text::make('num_liters_car_refueling')->translatable('moonshine::ui.field'),
-            Text::make('price_car_refueling')->translatable('moonshine::ui.field'),
-            Text::make('cost_car_refueling')->translatable('moonshine::ui.field'),
+            //Text::make('price_car_refueling')->translatable('moonshine::ui.field'),
+            //Text::make('cost_car_refueling')->translatable('moonshine::ui.field'),
             BelongsTo::make(
                 'petrol_station',
                 'petrolStation',

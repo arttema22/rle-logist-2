@@ -9,6 +9,7 @@ use MoonShine\Support\ListOf;
 use Illuminate\Validation\Rule;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
+use Illuminate\Database\Eloquent\Builder;
 use App\MoonShine\Pages\User\UserFormPage;
 use App\MoonShine\Pages\User\UserIndexPage;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -17,6 +18,18 @@ use MoonShine\Laravel\Resources\ModelResource;
 class UserResource extends ModelResource
 {
     protected string $model = User::class;
+
+    // protected array $with = ['profile'];
+
+    // public function query(): Builder
+    // {
+    // if (Auth::user()->moonshine_user_role_id == 3)
+    //     return parent::query()
+    //         ->where('driver_id', Auth::user()->id)
+    //         ->with('driver');
+
+    //     return parent::query()->with('profile');
+    // }
 
     protected string $column = 'name';
 
@@ -54,6 +67,7 @@ class UserResource extends ModelResource
                 'email',
                 Rule::unique('users')->ignoreModel($item),
             ],
+            'e1_card' => 'digits:19',
             'password' => $item->exists
                 ? 'sometimes|nullable|min:6|required_with:password_repeat|same:password_repeat'
                 : 'required|min:6|required_with:password_repeat|same:password_repeat',
@@ -67,16 +81,16 @@ class UserResource extends ModelResource
         return $item;
     }
 
-    protected function afterCreated(mixed $item): mixed
-    {
-        $item->profile()->create([
-            'last_name' => ' ',
-            'first_name' => ' ',
-            //  'sec_name' => '',
-            //  'phone' => '',
-            'status' => 1,
-        ]);
+    // protected function afterCreated(mixed $item): mixed
+    // {
+    //     $item->profile()->create([
+    //         'last_name' => ' ',
+    //         'first_name' => ' ',
+    //         //  'sec_name' => '',
+    //         //  'phone' => '',
+    //         'status' => 1,
+    //     ]);
 
-        return $item;
-    }
+    //     return $item;
+    // }
 }

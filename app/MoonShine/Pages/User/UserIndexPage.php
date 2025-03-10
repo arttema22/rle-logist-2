@@ -26,6 +26,7 @@ class UserIndexPage extends IndexPage
             Text::make('first_name', 'profile.first_name')->translatable('moonshine::ui.field'),
             Text::make('sec_name', 'profile.sec_name')->translatable('moonshine::ui.field'),
             Phone::make('phone', 'profile.phone')->translatable('moonshine::ui.field'),
+            Text::make('e1_card')->translatable('moonshine::ui.field'),
         ];
     }
 

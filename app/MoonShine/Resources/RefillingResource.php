@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
+use Closure;
 use App\Models\Refilling;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use MoonShine\Laravel\QueryTags\QueryTag;
+use Illuminate\View\ComponentAttributeBag;
+use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Refilling\RefillingFormPage;
 use App\MoonShine\Pages\Refilling\RefillingIndexPage;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use App\MoonShine\Pages\Refilling\RefillingDetailPage;
+use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 
 #[Icon('trophy')]
 class RefillingResource extends ModelResource
@@ -49,6 +54,9 @@ class RefillingResource extends ModelResource
                 Action::MASS_DELETE
             );
     }
+
+    protected string $sortColumn = 'date';
+    protected SortDirection $sortDirection = SortDirection::DESC;
 
     protected function pages(): array
     {
@@ -110,6 +118,16 @@ class RefillingResource extends ModelResource
     protected function beforeCreating(mixed $item): mixed
     {
         $item->owner_id = Auth::user()->id;
+        $item->price_car_refueling = env('PRICE_CAR_REFUELING');
+        $item->cost_car_refueling = request('num_liters_car_refueling') * env('PRICE_CAR_REFUELING');
+        return $item;
+    }
+
+    protected function beforeUpdating(mixed $item): mixed
+    {
+        $item->owner_id = Auth::user()->id;
+        $item->price_car_refueling = env('PRICE_CAR_REFUELING');
+        $item->cost_car_refueling = request('num_liters_car_refueling') * env('PRICE_CAR_REFUELING');
         return $item;
     }
 }

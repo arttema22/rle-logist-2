@@ -31,8 +31,9 @@ class UserFormPage extends FormPage
         return [
             Box::make([
                 Flex::make([
-                    Text::make('name')->translatable('moonshine::ui.field'), //->required(),
-                    Email::make('email')->translatable('moonshine::ui.field'), //->required(),
+                    Text::make('name')->translatable('moonshine::ui.field')->required(),
+                    Email::make('email')->translatable('moonshine::ui.field')->required(),
+                    Text::make('e1_card')->translatable('moonshine::ui.field'),
                 ]),
                 Collapse::make(__('moonshine::ui.resource.change_password'), [
                     Password::make(__('moonshine::ui.resource.password'), 'password')
