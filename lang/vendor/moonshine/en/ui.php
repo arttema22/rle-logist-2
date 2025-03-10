@@ -138,6 +138,12 @@ return [
         'sum_amount' => 'Sum Amount',
         'saldo_end' => 'Saldo End',
         'e1_card' => 'e1 card',
+        'help_api' => 'Help API',
+        'url' => 'URL',
+        'user_name' => 'User name',
+        'password' => 'Password',
+        'access_token' => 'Token',
+        'additionally' => 'Additionally',
     ],
 
     'title' => [
@@ -153,6 +159,7 @@ return [
         'admins' => 'Admins',
         'refillings' => 'Refillings',
         'logist' => 'Logist',
+        'integrations' => 'Integrations',
     ],
 
     'button' => [

@@ -138,6 +138,12 @@ return [
         'sum_amount' => 'Amount',
         'saldo_end' => 'Сальдо конечное',
         'e1_card' => 'e1 карта',
+        'help_api' => 'Помощь API',
+        'url' => 'URL',
+        'user_name' => 'Имя пользователя',
+        'password' => 'Пароль',
+        'access_token' => 'Токен',
+        'additionally' => 'Дополнительно',
     ],
 
     'title' => [
@@ -153,6 +159,7 @@ return [
         'admins' => 'Администраторы',
         'refillings' => 'Заправки',
         'logist' => 'Логист',
+        'integrations' => 'Интеграции',
     ],
 
     'button' => [

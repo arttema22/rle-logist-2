@@ -86,6 +86,7 @@ final class MoonShineLayout extends AppLayout
 
                 MenuItem::make('admins', MoonShineUserResource::class)->translatable('moonshine::ui.title'),
 
+                MenuItem::make(__('moonshine::ui.title.integrations'), SetupIntegrationResource::class),
                 // MenuItem::make(
                 //     static fn() => __('moonshine::ui.resource.role_title'),
                 //     MoonShineUserRoleResource::class
@@ -93,7 +94,6 @@ final class MoonShineLayout extends AppLayout
             ]),
             //...parent::menu(),
 
-            MenuItem::make('SetupIntegrations', SetupIntegrationResource::class),
         ];
     }
 
