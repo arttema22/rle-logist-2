@@ -6,7 +6,6 @@ namespace App\MoonShine\Resources\Dir;
 
 use MoonShine\Support\ListOf;
 use App\Models\Dir\DirService;
-use MoonShine\Laravel\Pages\Page;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirService\DirServiceFormPage;
