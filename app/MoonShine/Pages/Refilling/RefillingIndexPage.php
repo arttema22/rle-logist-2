@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Refilling;
 
+use Closure;
 use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Components\Alert;
 use MoonShine\UI\Components\Heading;
+use MoonShine\UI\Collections\TableRows;
+use MoonShine\UI\Collections\TableCells;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
+use MoonShine\UI\Components\Table\TableRow;
+use MoonShine\Contracts\UI\TableRowContract;
 use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\UI\Components\Table\TableBuilder;
+use MoonShine\Contracts\UI\Collection\TableRowsContract;
 
 class RefillingIndexPage extends IndexPage
 {
