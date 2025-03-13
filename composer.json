@@ -11,11 +11,13 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
+        "moonshine/apexcharts": "^1.0",
         "moonshine/moonshine": "^3.5",
         "moonshine/ru": "^1.0",
         "spatie/laravel-activitylog": "^4.10"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.15",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",

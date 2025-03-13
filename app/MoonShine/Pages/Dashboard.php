@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages;
 
+use App\Models\Refilling;
+use App\Models\Stat\StatRefilling;
+use MoonShine\Apexcharts\Components\LineChartMetric;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Pages\Page;
@@ -39,25 +42,27 @@ class Dashboard extends Page
      */
     protected function components(): iterable
     {
+        $arr = StatRefilling::
+            //orderByDesc('date_from')
+            all()
+            ->pluck('count_refillings', 'date_from')
+            ->toArray();
+
         return [
-            CardsBuilder::make(
-                [
-                    ['id' => 1, 'title' => 'Заголовок 1'],
-                    ['id' => 2, 'title' => 'Заголовок 2'],
-                ],
-                [
-                    ID::make(),
-                    Text::make('title')
-                ]
-            )
-                ->title('title')
-                ->subtitle(static fn() => 'Subtitle')
-                ->content('Custom content')
-                ->buttons([
-                    ActionButton::make('Delete', route('home')),
-                    ActionButton::make('Edit', route('home'))->showInDropdown(),
-                    ActionButton::make('Go to Home', route('home'))->blank(),
-                ]),
+            LineChartMetric::make('Refillings')
+                ->line([
+                    'Profit' => StatRefilling::query()
+
+                        ->selectRaw('SUM(count_refillings) as sum, date_from as date')
+                        ->groupBy('date')
+                        //->orderBy('date')
+                        //->orderByDesc('date')
+                        ->pluck('sum', 'date')
+                        ->toArray()
+                ], type: 'line'),
+
+            LineChartMetric::make('Refillings')
+                ->line([$arr], '#EC4176', type: 'line')
         ];
     }
 }

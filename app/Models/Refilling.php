@@ -6,9 +6,12 @@ use Carbon\Carbon;
 use App\Models\Dir\DirPetrolStation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Refilling extends Model
 {
+    use SoftDeletes;
+
     const TYPE_DIESEL = 'ДТ';
     const TYPE_BENZINE = 'Бензин';
 
