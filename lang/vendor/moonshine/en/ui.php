@@ -144,6 +144,7 @@ return [
         'password' => 'Password',
         'access_token' => 'Token',
         'additionally' => 'Additionally',
+        'type' => 'Type',
     ],
 
     'title' => [
@@ -160,6 +161,10 @@ return [
         'refillings' => 'Refillings',
         'logist' => 'Logist',
         'integrations' => 'Integrations',
+        'handmade' => 'Handmade',
+        'auto' => 'Auto',
+        'diesel' => 'Diesel',
+        'benzine' => 'Benzine',
     ],
 
     'button' => [

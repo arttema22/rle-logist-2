@@ -7,19 +7,16 @@ namespace App\MoonShine\Pages\Refilling;
 use Closure;
 use Throwable;
 use MoonShine\UI\Fields\Date;
+use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Text;
-use MoonShine\UI\Fields\Number;
+use App\Enums\TypeFuelEnumCast;
 use MoonShine\UI\Components\Alert;
-use MoonShine\UI\Components\Heading;
-use MoonShine\UI\Collections\TableRows;
-use MoonShine\UI\Collections\TableCells;
+use App\MoonShine\Resources\UserResource;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
-use MoonShine\UI\Components\Table\TableRow;
-use MoonShine\Contracts\UI\TableRowContract;
 use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\UI\Components\Table\TableBuilder;
-use MoonShine\Contracts\UI\Collection\TableRowsContract;
+use App\MoonShine\Resources\RefillingResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class RefillingIndexPage extends IndexPage
 {
@@ -35,9 +32,10 @@ class RefillingIndexPage extends IndexPage
             Text::make('price_car_refueling')->translatable('moonshine::ui.field')->sortable(),
             Text::make('cost_car_refueling')->translatable('moonshine::ui.field')->sortable(),
             Text::make('petrol_station', 'petrolStation.title')->translatable('moonshine::ui.field'),
+            Enum::make('type', 'type_fuel')->attach(TypeFuelEnumCast::class)->sortable()->translatable('moonshine::ui.field'),
             Text::make('comment')->translatable('moonshine::ui.field'),
-            Date::make('created_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
-            Date::make('updated_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
+            Date::make('created_at')->format('d.m.Y H:i')->translatable('moonshine::ui.field')->sortable(),
+            Date::make('updated_at')->format('d.m.Y H:i')->translatable('moonshine::ui.field')->sortable(),
         ];
     }
 
@@ -49,9 +47,9 @@ class RefillingIndexPage extends IndexPage
     {
         return [
             ...parent::topLayer(),
-            Alert::make(type: 'warning')->content('Внимание, изменения в системе! Большинство записей о заправке поступает в
-            систему автоматически. Обмен данными происходит каждые 5 минут.<br>
-                Делайте запись о заправке после того, как убедитесь, что ее нет в системе.'),
+            // Alert::make(type: 'warning')->content('Внимание, изменения в системе! Большинство записей о заправке поступает в
+            // систему автоматически. Обмен данными происходит каждые 5 минут.<br>
+            //     Делайте запись о заправке после того, как убедитесь, что ее нет в системе.'),
         ];
     }
     /**

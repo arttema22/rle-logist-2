@@ -144,6 +144,7 @@ return [
         'password' => 'Пароль',
         'access_token' => 'Токен',
         'additionally' => 'Дополнительно',
+        'type' => 'Тип',
     ],
 
     'title' => [
@@ -160,6 +161,10 @@ return [
         'refillings' => 'Заправки',
         'logist' => 'Логист',
         'integrations' => 'Интеграции',
+        'handmade' => 'Ручные',
+        'auto' => 'Автомат',
+        'diesel' => 'Дизель',
+        'benzine' => 'Бензин',
     ],
 
     'button' => [

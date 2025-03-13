@@ -4,11 +4,9 @@ namespace App;
 
 use App\Models\User;
 use App\Models\Refilling;
-use MoonShine\Models\MoonshineUser;
 use App\Models\Dir\DirPetrolStation;
 use App\Models\Sys\SetupIntegration;
 use Illuminate\Support\Facades\Http;
-use App\MoonShine\Controllers\IntegrationRefillingController;
 
 class E1cardService
 {
@@ -51,6 +49,7 @@ class E1cardService
         $this->callAuth(); // получаем токен
 
         $data = SetupIntegration::find(1); // получаем настройки интеграции
+
         // получаем список карточек.
         $cards = User::whereNotNull('e1_card')->pluck('e1_card')->toArray();
 
@@ -88,16 +87,34 @@ class E1cardService
                     $driver = User::where('e1_card', $transaction['card'])->first();
                     // Если водитель с карточкой существует, то создается запись о заправке
                     if ($driver) {
-                        Refilling::create([
-                            'date' => date('Y-m-d H:i', strtotime($transaction['date'])),
-                            'owner_id' => 1,
-                            'driver_id' => $driver->id,
-                            'petrol_stations_id' => $brand->id,
-                            'num_liters_car_refueling' => $transaction['volume'],
-                            'price_car_refueling' => env('PRICE_CAR_REFUELING', 48),
-                            'cost_car_refueling' => $transaction['volume'] * env('PRICE_CAR_REFUELING', 48),
-                            'integration_id' => $transaction['UnID'],
-                        ]);
+                        // Если идет заправка бензином service_id=33, то цена и сумма берутся из транзакции
+                        if ($transaction['service_id'] === 33) {
+                            Refilling::create([
+                                'date' => date('Y-m-d H:i', strtotime($transaction['date'])),
+                                'owner_id' => 1,
+                                'driver_id' => $driver->id,
+                                'petrol_stations_id' => $brand->id,
+                                'type_fuel' => Refilling::TYPE_BENZINE,
+                                'num_liters_car_refueling' => $transaction['volume'],
+                                'price_car_refueling' => $transaction['price'],
+                                'cost_car_refueling' => $transaction['sum'],
+                                'integration_id' => $transaction['UnID'],
+                            ]);
+                        } else {
+                            // все остальные заправки - берется только количество топлива из транзакции
+                            // дальше все умножается на константу
+                            Refilling::create([
+                                'date' => date('Y-m-d H:i', strtotime($transaction['date'])),
+                                'owner_id' => 1,
+                                'driver_id' => $driver->id,
+                                'petrol_stations_id' => $brand->id,
+                                'type_fuel' => Refilling::TYPE_DIESEL,
+                                'num_liters_car_refueling' => $transaction['volume'],
+                                'price_car_refueling' => env('PRICE_CAR_REFUELING', 48),
+                                'cost_car_refueling' => $transaction['volume'] * env('PRICE_CAR_REFUELING', 48),
+                                'integration_id' => $transaction['UnID'],
+                            ]);
+                        }
                     };
                 };
             }

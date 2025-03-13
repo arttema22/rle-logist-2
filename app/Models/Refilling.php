@@ -9,11 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Refilling extends Model
 {
+    const TYPE_DIESEL = 'ДТ';
+    const TYPE_BENZINE = 'Бензин';
+
     protected $fillable = [
         'date',
         'owner_id',
         'driver_id',
         'petrol_stations_id',
+        'type_fuel',
         'num_liters_car_refueling',
         'price_car_refueling',
         'cost_car_refueling',
