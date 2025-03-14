@@ -165,6 +165,9 @@ return [
         'auto' => 'Auto',
         'diesel' => 'Diesel',
         'benzine' => 'Benzine',
+        'count' => 'Count',
+        'sum' => 'Sum',
+        'dashboard' => 'Dashboard',
     ],
 
     'button' => [
