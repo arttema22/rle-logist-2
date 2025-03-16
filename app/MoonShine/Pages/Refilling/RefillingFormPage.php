@@ -80,7 +80,7 @@ class RefillingFormPage extends FormPage
                     Column::make(
                         [
                             Div::make()
-                                ->xDisplay('"Result:<br>" + (num_liters_car_refueling * price_car_refueling)')
+                                ->xDisplay('(num_liters_car_refueling * price_car_refueling)')
                                 ->class('report-card-value'),
 
                         ],

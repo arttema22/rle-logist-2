@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use Closure;
 use App\Models\Refilling;
 use MoonShine\Support\ListOf;
-use MoonShine\UI\Fields\Date;
-use MoonShine\UI\Components\Alert;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
 use Illuminate\Database\Eloquent\Builder;
 use MoonShine\Laravel\QueryTags\QueryTag;
-use MoonShine\Laravel\Components\Fragment;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Refilling\RefillingFormPage;
@@ -22,13 +18,13 @@ use App\MoonShine\Pages\Refilling\RefillingIndexPage;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use App\MoonShine\Pages\Refilling\RefillingDetailPage;
 use MoonShine\UI\Components\Metrics\Wrapped\ValueMetric;
-use App\MoonShine\Resources\Dir\DirPetrolStationResource;
-use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 
-#[Icon('trophy')]
+#[Icon('battery-50')]
 class RefillingResource extends ModelResource
 {
     protected string $model = Refilling::class;
+
+    protected bool $withPolicy = true;
 
     public function getTitle(): string
     {
@@ -73,12 +69,13 @@ class RefillingResource extends ModelResource
     {
         return [
             'date' => ['required', 'date', 'before_or_equal:today'],
-            'owner_id' => ['required'],
+            //'owner_id' => ['required'],
             'driver_id' => ['required'],
             'petrol_stations_id' => ['required'],
+            //'type_fuel',
             'num_liters_car_refueling' => ['required'],
-            'price_car_refueling' => ['required'],
-            'cost_car_refueling' => ['required'],
+            //'price_car_refueling' => ['required'],
+            //'cost_car_refueling' => ['required'],
         ];
     }
 
@@ -159,36 +156,38 @@ class RefillingResource extends ModelResource
 
     protected function metrics(): array
     {
+        $count_refillings = Refilling::where('profit_id',  0)->count();
+
         return [
             ValueMetric::make('refillings')
-                ->value(fn() => Refilling::count())
+                ->value($count_refillings)
                 ->columnSpan(2, 4)
                 ->translatable('moonshine::ui.title'),
 
             ValueMetric::make('handmade')
-                ->value(fn() => Refilling::whereIntegrationId(0)->count())
-                ->progress(fn(): int => REfilling::count())
+                ->value(fn() => Refilling::where('profit_id',  0)->whereIntegrationId(0)->count())
+                ->progress($count_refillings)
                 ->class('bgc-blue')
                 ->columnSpan(2, 4)
                 ->translatable('moonshine::ui.title'),
 
             ValueMetric::make('auto')
-                ->value(fn() => Refilling::whereNot('integration_id', 0)->count())
-                ->progress(fn(): int => REfilling::count())
+                ->value(fn() => Refilling::where('profit_id',  0)->whereNot('integration_id', 0)->count())
+                ->progress($count_refillings)
                 ->columnSpan(2, 4)
                 ->translatable('moonshine::ui.title'),
 
             ValueMetric::make('diesel')
-                ->value(fn() => Refilling::where('type_fuel', Refilling::TYPE_DIESEL)
+                ->value(fn() => Refilling::where('profit_id',  0)->where('type_fuel', Refilling::TYPE_DIESEL)
                     ->count())
-                ->progress(fn(): int => REfilling::count())
+                ->progress($count_refillings)
                 ->columnSpan(2, 4)
                 ->translatable('moonshine::ui.title'),
 
             ValueMetric::make('benzine')
-                ->value(fn() => Refilling::where('type_fuel', Refilling::TYPE_BENZINE)
+                ->value(fn() => Refilling::where('profit_id',  0)->where('type_fuel', Refilling::TYPE_BENZINE)
                     ->count())
-                ->progress(fn(): int => REfilling::count())
+                ->progress($count_refillings)
                 ->class('bgc-red')
                 ->columnSpan(2, 4)
                 ->translatable('moonshine::ui.title'),
