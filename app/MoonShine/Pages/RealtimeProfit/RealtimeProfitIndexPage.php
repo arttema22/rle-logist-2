@@ -5,43 +5,49 @@ declare(strict_types=1);
 namespace App\MoonShine\Pages\RealtimeProfit;
 
 use Throwable;
-use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
-use MoonShine\Support\AlpineJs;
-use MoonShine\Support\Enums\JsEvent;
-use MoonShine\Contracts\UI\FieldContract;
-use MoonShine\UI\Components\CardsBuilder;
-use App\MoonShine\Resources\SalaryResource;
+use MoonShine\UI\Fields\Preview;
+use App\MoonShine\Resources\RouteResource;
+use App\MoonShine\Resources\ProfitResource;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
-use App\MoonShine\Resources\RefillingResource;
+use MoonShine\Laravel\Fields\Relationships\HasOne;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
 
 class RealtimeProfitIndexPage extends IndexPage
 {
-
     protected function fields(): iterable
     {
         return [
-            //Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')->sortable(),
-            HasMany::make(
+            Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')->sortable()
+                ->columnSelection(false),
+
+            Text::make('saldo_start', 'profit.saldo_end')
+                ->translatable('moonshine::ui.field'),
+
+            Text::make(
                 'salaries',
-                'salaries',
-                resource: SalaryResource::class
-            )->fields([
-                Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
-                Text::make('salary'),
-                Text::make('comment'),
-            ]),
-            // HasMany::make(
-            //     'refillings',
-            //     'refillings',
-            //     resource: RefillingResource::class
-            // )->fields([
-            //     Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
-            //     Text::make('cost_car_refueling'),
-            //     Text::make('comment'),
-            // ]),
+                formatted: fn($item) => $item->salaries_count
+                    . ' - ' . $item->salaries_sum_salary
+            )->translatable('moonshine::ui.field'),
+
+            Text::make(
+                'routes',
+                formatted: fn($item) => $item->routes_count
+                    . ' - ' . $item->routes_sum_summ_route
+            )->translatable('moonshine::ui.field'),
+
+            Text::make(
+                'refillings',
+                formatted: fn($item) => $item->refillings_count
+                    . ' - ' . $item->refillings_sum_cost_car_refueling
+            )->translatable('moonshine::ui.field'),
+
+            Text::make(
+                label: 'turnover',
+                formatted: fn($item) => $item->routes_sum_summ_route - $item->refillings_sum_cost_car_refueling - $item->salaries_sum_salary
+            )->translatable('moonshine::ui.field'),
+
         ];
     }
 

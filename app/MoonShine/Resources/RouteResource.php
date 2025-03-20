@@ -97,20 +97,20 @@ class RouteResource extends ModelResource
         ];
     }
 
-    protected function queryTags(): array
-    {
-        return [
-            QueryTag::make(
-                __('moonshine::ui.button.active'),
-                fn(Builder $query) => $query->where('profit_id', '=', 0)
-            )->alias('active')
-                ->default(),
-            QueryTag::make(
-                __('moonshine::ui.button.archive'),
-                fn(Builder $query) => $query->where('profit_id', '!=', 0)
-            )->alias('archive'),
-        ];
-    }
+    // protected function queryTags(): array
+    // {
+    //     return [
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.active'),
+    //             fn(Builder $query) => $query->where('profit_id', '=', 0)
+    //         )->alias('active')
+    //             ->default(),
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.archive'),
+    //             fn(Builder $query) => $query->where('profit_id', '!=', 0)
+    //         )->alias('archive'),
+    //     ];
+    // }
 
     protected function beforeCreating(mixed $item): mixed
     {

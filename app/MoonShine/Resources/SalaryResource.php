@@ -21,6 +21,7 @@ use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 #[Icon('trophy')]
 class SalaryResource extends ModelResource
 {
+
     protected string $model = Salary::class;
 
     public function getTitle(): string
@@ -84,20 +85,20 @@ class SalaryResource extends ModelResource
         return ['date', 'driver.profile.SurnameInitials', 'salary', 'comment'];
     }
 
-    protected function queryTags(): array
-    {
-        return [
-            QueryTag::make(
-                __('moonshine::ui.button.active'),
-                fn(Builder $query) => $query->where('profit_id', '=', 0)
-            )->alias('active')
-                ->default(),
-            QueryTag::make(
-                __('moonshine::ui.button.archive'),
-                fn(Builder $query) => $query->where('profit_id', '!=', 0)
-            )->alias('archive'),
-        ];
-    }
+    // protected function queryTags(): array
+    // {
+    //     return [
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.active'),
+    //             fn(Builder $query) => $query->where('profit_id', '=', 0)
+    //         )->alias('active')
+    //             ->default(),
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.archive'),
+    //             fn(Builder $query) => $query->where('profit_id', '!=', 0)
+    //         )->alias('archive'),
+    //     ];
+    // }
 
     protected function beforeCreating(mixed $item): mixed
     {

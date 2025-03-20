@@ -145,6 +145,10 @@ return [
         'access_token' => 'Token',
         'additionally' => 'Additionally',
         'type' => 'Type',
+        'salaries' => 'Salaries',
+        'routes' => 'Routes',
+        'refillings' => 'Refillings',
+        'turnover' =>  'Turnover',
     ],
 
     'title' => [
@@ -168,6 +172,7 @@ return [
         'count' => 'Count',
         'sum' => 'Sum',
         'dashboard' => 'Dashboard',
+        'main' => 'Main',
     ],
 
     'button' => [

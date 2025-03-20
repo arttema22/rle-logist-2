@@ -10,6 +10,8 @@ use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
+use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
@@ -58,6 +60,26 @@ class ProfitResource extends ModelResource
             Text::make('comment')->translatable('moonshine::ui.field'),
             Date::make('created_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Date::make('updated_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
+        ];
+    }
+
+    /**
+     * @return list<ComponentContract|FieldContract>
+     */
+    protected function formFields(): iterable
+    {
+        return [
+            Text::make('title')->translatable('moonshine::ui.field'),
+        ];
+    }
+
+    /**
+     * @return list<FieldContract>
+     */
+    protected function detailFields(): iterable
+    {
+        return [
+            Text::make('saldo_end')->translatable('moonshine::ui.field'),
         ];
     }
 

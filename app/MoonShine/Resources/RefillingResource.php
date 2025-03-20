@@ -9,8 +9,6 @@ use MoonShine\Support\ListOf;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
-use Illuminate\Database\Eloquent\Builder;
-use MoonShine\Laravel\QueryTags\QueryTag;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Refilling\RefillingFormPage;
@@ -23,6 +21,7 @@ use MoonShine\UI\Components\Metrics\Wrapped\ValueMetric;
 class RefillingResource extends ModelResource
 {
     protected string $model = Refilling::class;
+
 
     protected bool $withPolicy = true;
 
@@ -106,20 +105,20 @@ class RefillingResource extends ModelResource
         ];
     }
 
-    protected function queryTags(): array
-    {
-        return [
-            QueryTag::make(
-                __('moonshine::ui.button.active'),
-                fn(Builder $query) => $query->where('profit_id', '=', 0)
-            )->alias('active')
-                ->default(),
-            QueryTag::make(
-                __('moonshine::ui.button.archive'),
-                fn(Builder $query) => $query->where('profit_id', '!=', 0)
-            )->alias('archive'),
-        ];
-    }
+    // protected function queryTags(): array
+    // {
+    //     return [
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.active'),
+    //             fn(Builder $query) => $query->where('profit_id', '=', 0)
+    //         )->alias('active')
+    //             ->default(),
+    //         QueryTag::make(
+    //             __('moonshine::ui.button.archive'),
+    //             fn(Builder $query) => $query->where('profit_id', '!=', 0)
+    //         )->alias('archive'),
+    //     ];
+    // }
 
     protected function beforeCreating(mixed $item): mixed
     {

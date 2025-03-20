@@ -145,6 +145,10 @@ return [
         'access_token' => 'Токен',
         'additionally' => 'Дополнительно',
         'type' => 'Тип',
+        'salaries' => 'Выплаты',
+        'routes' => 'Маршруты',
+        'refillings' => 'Заправки',
+        'turnover' =>  'Обороты',
     ],
 
     'title' => [
@@ -168,6 +172,7 @@ return [
         'count' => 'Количество',
         'sum' => 'Сумма',
         'dashboard' => 'Панель',
+        'main' => 'Основное',
     ],
 
     'button' => [

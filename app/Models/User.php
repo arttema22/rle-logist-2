@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -54,11 +55,26 @@ class User extends Authenticatable
 
     public function salaries()
     {
-        return $this->hasMany(Salary::class, 'driver_id');
+        return $this->hasMany(Salary::class, 'driver_id')->where('profit_id',  0);
     }
 
     public function refillings()
     {
-        return $this->hasMany(Refilling::class, 'driver_id');
+        return $this->hasMany(Refilling::class, 'driver_id')->where('profit_id',  0);
+    }
+
+    public function routes()
+    {
+        return $this->hasMany(Route::class, 'driver_id')->where('profit_id',  0);
+    }
+
+    public function profits()
+    {
+        return $this->hasMany(Profit::class, 'driver_id');
+    }
+
+    public function profit(): HasOne
+    {
+        return $this->hasOne(Profit::class, 'driver_id')->latestOfMany();
     }
 }
