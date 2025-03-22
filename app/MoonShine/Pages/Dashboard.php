@@ -4,24 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages;
 
-use App\Models\Refilling;
+use App\Models\Stat\StatRoutes;
 use App\Models\Stat\StatSalaries;
 use MoonShine\UI\Components\Collapse;
-use MoonShine\UI\Fields\ID;
-use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Pages\Page;
 use App\Models\Stat\StatRefilling;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
-use MoonShine\UI\Components\Layout\Grid;
-use MoonShine\UI\Components\ActionButton;
-use MoonShine\UI\Components\CardsBuilder;
 use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\Laravel\Resources\CrudResource;
-use MoonShine\UI\Components\Table\TableBuilder;
-use MoonShine\Contracts\Core\CrudResourceContract;
 use MoonShine\Apexcharts\Components\LineChartMetric;
-use MoonShine\Contracts\Core\DependencyInjection\FieldsContract;
 use MoonShine\UI\Components\Heading;
 
 class Dashboard extends Page
@@ -55,6 +44,10 @@ class Dashboard extends Page
         $count_salaries = StatSalaries::get(['date_from', 'count_salaries'])
             ->pluck('count_salaries', 'date_from')
             ->toArray();
+        $count_routes = StatRoutes::get(['date_from', 'count_routes'])
+            ->pluck('count_routes', 'date_from')
+            ->toArray();
+
 
         $sum_refillings = StatRefilling::
             //orderByDesc('date_from')
@@ -73,12 +66,17 @@ class Dashboard extends Page
                     LineChartMetric::make('count')
                         ->line(
                             [__('moonshine::ui.title.refillings') => $count_refillings],
-                            // '#EC4176',
+                            '#EC4176',
                             type: 'line'
                         )
                         ->line(
                             [__('moonshine::ui.title.salaries') => $count_salaries],
-                            '#EC4176',
+                            '#28963C',
+                            type: 'line'
+                        )
+                        ->translatable('moonshine::ui.title')
+                        ->line(
+                            [__('moonshine::ui.title.routes') => $count_routes],
                             type: 'line'
                         )
                         ->translatable('moonshine::ui.title')

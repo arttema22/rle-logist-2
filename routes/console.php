@@ -9,3 +9,5 @@ Schedule::command('e1card:transaction')->everyFiveMinutes();
 Schedule::command('stat:create-monthly-refillings')->monthlyOn(20, '01:00');
 // Сбор статистики о выплатах. Ежемесячно.
 Schedule::command('stat:create-monthly-salaries')->monthlyOn(20, '01:05');
+// Сбор статистики о маршрутах. Ежемесячно.
+Schedule::command('stat:create-monthly-routes')->monthlyOn(20, '01:10');
