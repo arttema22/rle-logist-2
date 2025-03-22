@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MoonShine\Pages;
 
 use App\Models\Refilling;
+use App\Models\Stat\StatSalaries;
 use MoonShine\UI\Components\Collapse;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Text;
@@ -51,6 +52,9 @@ class Dashboard extends Page
             ->pluck('count_refillings', 'date_from')
             //->sortByDesc('date_from')
             ->toArray();
+        $count_salaries = StatSalaries::get(['date_from', 'count_salaries'])
+            ->pluck('count_salaries', 'date_from')
+            ->toArray();
 
         $sum_refillings = StatRefilling::
             //orderByDesc('date_from')
@@ -66,10 +70,15 @@ class Dashboard extends Page
                 'refillings',
                 [
                     Heading::make('Количество по месяцам')->h(1),
-                    LineChartMetric::make('refillings')
+                    LineChartMetric::make('count')
                         ->line(
-                            [__('moonshine::ui.title.count') => $count_refillings],
+                            [__('moonshine::ui.title.refillings') => $count_refillings],
                             // '#EC4176',
+                            type: 'line'
+                        )
+                        ->line(
+                            [__('moonshine::ui.title.salaries') => $count_salaries],
+                            '#EC4176',
                             type: 'line'
                         )
                         ->translatable('moonshine::ui.title')

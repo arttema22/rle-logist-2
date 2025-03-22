@@ -19,7 +19,7 @@ require __DIR__ . '/auth.php';
 
 
 
-// Группа Зарплата
+// Группа Выплаты
 Route::name('salary.')
     ->prefix('salary')
     // ->namespace('Salary')
