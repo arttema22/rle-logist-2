@@ -68,13 +68,7 @@ class RefillingResource extends ModelResource
     {
         return [
             'date' => ['required', 'date', 'before_or_equal:today'],
-            //'owner_id' => ['required'],
-            'driver_id' => ['required'],
-            'petrol_stations_id' => ['required'],
-            //'type_fuel',
             'num_liters_car_refueling' => ['required'],
-            //'price_car_refueling' => ['required'],
-            //'cost_car_refueling' => ['required'],
         ];
     }
 

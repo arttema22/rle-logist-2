@@ -3,6 +3,7 @@
 use App\Http\Controllers\RefillingController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\SalaryContriller;
+use App\MoonShine\Controllers\ClosePeriodController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
@@ -17,7 +18,7 @@ Route::view('profile', 'profile')
 
 require __DIR__ . '/auth.php';
 
-
+require __DIR__ . '/moonshine.php';
 
 // Группа Выплаты
 Route::name('salary.')

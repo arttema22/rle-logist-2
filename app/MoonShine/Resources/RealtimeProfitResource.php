@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use Closure;
 use App\Models\User;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
-use MoonShine\UI\Components\Modal;
+use MoonShine\UI\Fields\Hidden;
+use MoonShine\UI\Fields\Textarea;
+use MoonShine\UI\Components\Alert;
 use MoonShine\Laravel\Enums\Action;
+use Illuminate\Support\Facades\Auth;
+use MoonShine\UI\Components\Heading;
 use MoonShine\Support\Attributes\Icon;
-use MoonShine\UI\Components\OffCanvas;
-use MoonShine\UI\Collections\TableRows;
-use MoonShine\UI\Collections\TableCells;
+use Illuminate\Database\Eloquent\Model;
+use App\MoonShine\Pages\ClosePeriodPage;
+use MoonShine\UI\Components\FormBuilder;
 use MoonShine\UI\Components\ActionButton;
-use MoonShine\UI\Components\Table\TableRow;
-use MoonShine\Contracts\UI\TableRowContract;
+use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
-use MoonShine\UI\Components\Table\TableBuilder;
+use MoonShine\Contracts\UI\ActionButtonContract;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use MoonShine\Contracts\UI\Collection\TableRowsContract;
-use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
-use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitFormPage;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
 
-#[Icon('trophy')]
+#[Icon('circle-stack')]
 class RealtimeProfitResource extends ModelResource
 {
 
@@ -38,6 +38,7 @@ class RealtimeProfitResource extends ModelResource
         'routes',
         'refillings',
         'salaries',
+        'services',
         //  'profit',
     ];
 
@@ -45,7 +46,11 @@ class RealtimeProfitResource extends ModelResource
 
     protected bool $columnSelection = true;
 
-    //protected bool $isLazy = true;
+    protected bool $isLazy = true;
+
+    protected string $sortColumn = 'name';
+
+    protected SortDirection $sortDirection = SortDirection::ASC;
 
     protected function activeActions(): ListOf
     {
@@ -59,119 +64,79 @@ class RealtimeProfitResource extends ModelResource
             );
     }
 
-    // public function query(): Builder
-    // {
-
-    //  dd($this->model);
-    // if (Auth::user()->moonshine_user_role_id == 3)
-    //     return parent::query()
-    //         ->where('driver_id', Auth::user()->id)
-    //         ->with('driver');
-
-    //  return parent::query()->with('profile');
-    // return parent::query();
-    // }
-
-    // protected function modifyQueryBuilder(Builder $builder): Builder
-    // {
-    //     //dd($builder->where('status', true)->toSql());
-    //     return $builder->where('status', true)
-    //         ->where('role_id', 2)
-    //         ->orderByDesc('name');
-    // }
-
     protected function modifyQueryBuilder(Builder $builder): Builder
     {
         return $builder
             ->withCount('routes')
             ->withCount('refillings')
             ->withCount('salaries')
+            ->withCount('services')
             ->withSum('routes', 'summ_route')
             ->withSum('refillings', 'cost_car_refueling')
             ->withSum('salaries', 'salary')
+            ->withSum('services', 'sum')
             // ->with('profit')
         ;
     }
 
-    protected string $title = 'RealtimeProfits';
-
-    // public function getListEventName(?string $name = null, array $params = []): string
-    // {
-    //     $name ??= $this->getListComponentName();
-
-    //     return AlpineJs::event(JsEvent::CARDS_UPDATED, $name, $params);
-    // }
-
-    // public function modifyListComponent(ComponentContract $component): ComponentContract
-    // {
-    //     return CardsBuilder::make($this->getItems(), $this->getIndexFields())
-    //         ->cast($this->getCaster())
-    //         ->name($this->getListComponentName())
-    //         ->async()
-    //         //->overlay()
-    //         ->title('profile.SurnameInitials')
-    //         ->subtitle('email')
-    //         //->url(fn($user) => $this->getFormPageUrl($user->getKey()))
-    //         //->thumbnail(fn($user) => asset($user->avatar))
-    //         ->buttons($this->getIndexButtons());
-    // }
+    public function getTitle(): string
+    {
+        return __('moonshine::ui.title.realtime_profits');
+    }
 
     protected function pages(): array
     {
         return [
             RealtimeProfitIndexPage::class,
-            RealtimeProfitFormPage::class,
             RealtimeProfitDetailPage::class,
         ];
     }
-
-    // protected function indexButtons(): ListOf
-    // {
-    //     return parent::indexButtons()
-    //         ->add(ActionButton::make('Link', '/endpoint'));
-    // }
-
-    // protected function tdAttributes(): Closure
-    // {
-    //     return fn(?DataWrapperContract $data, int $row, int $cell) => [
-    //         'style' => 'align-content: start'
-    //     ];
-    // }
 
     protected function rules(mixed $item): array
     {
         return [];
     }
 
-    // protected function tfoot(): null|TableRowsContract|Closure
+    protected function modifyDetailButton(ActionButtonContract $button): ActionButtonContract
+    {
+        return $button->primary();
+    }
+
+    // protected function indexButtons(): ListOf
     // {
-    //     return static function (?TableRowContract $default, TableBuilder $table) {
-    //         $cells = TableCells::make();
-
-    //         $cells->pushCell('Balance:');
-    //         $cells->pushCell('$1000');
-
-    //         return TableRows::make([TableRow::make($cells), $default]);
-    //     };
+    //     return parent::indexButtons()
+    //         ->prepend(
+    //             ActionButton::make(
+    //                 'close_period',
+    //             )->translatable('moonshine::ui.button')
+    //                 ->secondary()
+    //         );
     // }
 
     protected function detailButtons(): ListOf
     {
         return parent::detailButtons()
             ->add(
-                ActionButton::make('close_period', '/endpoint')->icon('pencil')->primary()
-                    ->inOffCanvas(
-                        title: fn() => 'Offcanvas Title',
-                        content: fn() => 'Content',
-                        //name: false,
-                        builder: fn(OffCanvas $offCanvas, ActionButton $ctx) => $offCanvas->left(),
-                        // опционально - необходимо чтобы компоненты были доступны для поиска в системе, т.к. content всего лишь HTML
-                        components: [
-                            Date::make(),
-                        ],
-                    )
+                ActionButton::make(
+                    'close_period',
+                )->translatable('moonshine::ui.button')
+                    ->secondary()
+                    ->inModal(
+                        __('moonshine::ui.button.close_period'),
+                        fn(Model $item) => FormBuilder::make(route('close.period'))
+                            ->fields([
+                                Hidden::make('driver_id')->setValue($item->id),
+                                Hidden::make('owner_id')->setValue(Auth::user()->id),
+                                Alert::make(type: 'error')->content('Внимание! Процедура закрытия периода необратима. Все маршруты, заправки и выплаты попавшие в закрываемый период, не будут доступны для редактирования в дальнейшем.'),
+                                Heading::make($item->profile->SurnameInitials),
+                                Date::make('date'),
+                                Textarea::make('comment')->translatable('moonshine::ui.field'),
+                            ])
+                            ->async()
+                            ->submit(__('moonshine::ui.button.close_period'), ['class' => 'btn-secondary'])
+                    ),
+                ActionButton::make('back', fn() => $this->getIndexPageUrl())
+                    ->translatable('moonshine::ui.button')
             );
     }
-
-    public function test() {}
 }

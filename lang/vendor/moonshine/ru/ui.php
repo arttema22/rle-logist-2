@@ -134,7 +134,7 @@ return [
         'sum_refuelings' => 'Сумма заправок',
         'sum_routes' => 'Сумма маршрутов',
         'sum_services' => 'Сумма услуг',
-        'sum_accrual' => 'Sum Accrual',
+        'sum_accrual' => 'Сумма начисления',
         'sum_amount' => 'Amount',
         'saldo_end' => 'Сальдо конечное',
         'e1_card' => 'e1 карта',
@@ -147,8 +147,10 @@ return [
         'type' => 'Тип',
         'salaries' => 'Выплаты',
         'routes' => 'Маршруты',
+        'route' => 'Маршрут',
         'refillings' => 'Заправки',
         'turnover' =>  'Обороты',
+        'services' => 'Услуги',
     ],
 
     'title' => [
@@ -173,11 +175,16 @@ return [
         'sum' => 'Сумма',
         'dashboard' => 'Панель',
         'main' => 'Основное',
+        'realtime_profits' => 'Текущий расчет',
+        'close_period' => 'Закрыть период',
+        'profits' => 'Сверка'
     ],
 
     'button' => [
         'active' => 'Активные',
         'archive' => 'Архивные',
+        'close_period' => 'Закрыть период',
+        'back' => 'Назад',
     ],
 
 ];

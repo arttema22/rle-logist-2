@@ -10,8 +10,6 @@ use MoonShine\UI\Fields\Date;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
-use Illuminate\Database\Eloquent\Builder;
-use MoonShine\Laravel\QueryTags\QueryTag;
 use App\MoonShine\Pages\Route\RouteFormPage;
 use App\MoonShine\Pages\Route\RouteIndexPage;
 use App\MoonShine\Pages\Route\RouteDetailPage;
@@ -46,7 +44,11 @@ class RouteResource extends ModelResource
     {
         return parent::activeActions()
             ->except(
-                Action::MASS_DELETE
+                Action::MASS_DELETE,
+                Action::CREATE,
+                Action::VIEW,
+                Action::UPDATE,
+                Action::DELETE
             );
     }
 

@@ -61,15 +61,17 @@ final class MoonShineLayout extends AppLayout
     protected function menu(): array
     {
         return [
+            MenuItem::make('realtime_profits', RealtimeProfitResource::class)->translatable('moonshine::ui.title'),
+
             MenuGroup::make('logist', [
 
-                MenuItem::make('routes', RouteResource::class)->translatable('moonshine::ui.title'),
-                MenuItem::make('refillings', RefillingResource::class)->translatable('moonshine::ui.title'),
                 MenuItem::make('salaries', SalaryResource::class)->translatable('moonshine::ui.title'),
-                MenuItem::make('Profits', ProfitResource::class),
-                MenuItem::make('RealtimeProfits', RealtimeProfitResource::class),
+                MenuItem::make('refillings', RefillingResource::class)->translatable('moonshine::ui.title'),
+                MenuItem::make('routes', RouteResource::class)->translatable('moonshine::ui.title'),
+                MenuItem::make('profits', ProfitResource::class)->translatable('moonshine::ui.title'),
 
                 MenuGroup::make('directory', [
+                    MenuItem::make('drivers', UserResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('typetrucks', DirTypeTruckResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('cargos', DirCargoResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('payers', DirPayerResource::class)->translatable('moonshine::ui.title'),
@@ -79,13 +81,8 @@ final class MoonShineLayout extends AppLayout
                 ])->translatable('moonshine::ui.title'),
             ])->translatable('moonshine::ui.title'),
 
-
-
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
-                MenuItem::make('drivers', UserResource::class)->translatable('moonshine::ui.title'),
-
                 MenuItem::make('admins', MoonShineUserResource::class)->translatable('moonshine::ui.title'),
-
                 MenuItem::make(__('moonshine::ui.title.integrations'), SetupIntegrationResource::class),
                 // MenuItem::make(
                 //     static fn() => __('moonshine::ui.resource.role_title'),

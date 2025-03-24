@@ -147,8 +147,10 @@ return [
         'type' => 'Type',
         'salaries' => 'Salaries',
         'routes' => 'Routes',
+        'route' => 'Route',
         'refillings' => 'Refillings',
         'turnover' =>  'Turnover',
+        'services' => 'Services',
     ],
 
     'title' => [
@@ -173,10 +175,15 @@ return [
         'sum' => 'Sum',
         'dashboard' => 'Dashboard',
         'main' => 'Main',
+        'realtime_profits' => 'Realtime Profits',
+        'close_period' => 'Close Period',
+        'profits' => 'Profits'
     ],
 
     'button' => [
         'active' => 'Active',
         'archive' => 'Archive',
+        'close_period' => 'Close period',
+        'back' => 'Back',
     ],
 ];

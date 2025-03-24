@@ -62,7 +62,10 @@ class SalaryResource extends ModelResource
 
     protected function rules(mixed $item): array
     {
-        return [];
+        return [
+            'date' => ['required', 'date', 'before_or_equal:today'],
+            'salary' => ['required'],
+        ];
     }
 
     protected function filters(): iterable

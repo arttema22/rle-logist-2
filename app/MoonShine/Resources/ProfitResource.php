@@ -99,7 +99,7 @@ class ProfitResource extends ModelResource
             )->nullable()
                 ->searchable()
                 ->translatable('moonshine::ui.field'),
-            Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
+
         ];
     }
 

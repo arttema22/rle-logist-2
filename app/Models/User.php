@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Route::class, 'driver_id')->where('profit_id',  0);
     }
 
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'driver_id')->where('status', 1);
+    }
+
     public function profits()
     {
         return $this->hasMany(Profit::class, 'driver_id');

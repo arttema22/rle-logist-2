@@ -8,11 +8,8 @@ use App\Enums\TypeFuelEnumCast;
 use App\Models\Refilling;
 use Throwable;
 use MoonShine\UI\Fields\Date;
-use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Number;
-use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Textarea;
-use MoonShine\UI\Components\Badge;
 use MoonShine\UI\Components\Layout\Div;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Layout\Grid;
@@ -92,13 +89,10 @@ class RefillingFormPage extends FormPage
                 Textarea::make('comment')->translatable('moonshine::ui.field'),
 
             ])->xData([
-                'num_liters_car_refueling' => 0,
+                'num_liters_car_refueling' => null,
                 'price_car_refueling' => env('PRICE_CAR_REFUELING'),
                 'type_fuel' => Refilling::TYPE_DIESEL,
             ]),
-
-            //Text::make('cost_car_refueling')->translatable('moonshine::ui.field'),
-
 
         ];
     }

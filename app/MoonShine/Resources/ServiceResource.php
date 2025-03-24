@@ -28,7 +28,11 @@ class ServiceResource extends ModelResource
     {
         return parent::activeActions()
             ->except(
-                Action::MASS_DELETE
+                Action::MASS_DELETE,
+                Action::CREATE,
+                Action::VIEW,
+                Action::UPDATE,
+                Action::DELETE
             );
     }
 
