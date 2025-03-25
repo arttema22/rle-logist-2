@@ -78,8 +78,9 @@ final class MoonShineLayout extends AppLayout
                     MenuItem::make('petrol_stations', DirPetrolStationResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('services', DirServiceResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('routes', DirRouteResource::class)->translatable('moonshine::ui.title'),
-                ])->translatable('moonshine::ui.title'),
-            ])->translatable('moonshine::ui.title'),
+                ])->translatable('moonshine::ui.title')->icon('queue-list'),
+
+            ])->translatable('moonshine::ui.title')->icon('map'),
 
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
                 MenuItem::make('admins', MoonShineUserResource::class)->translatable('moonshine::ui.title'),
@@ -88,7 +89,7 @@ final class MoonShineLayout extends AppLayout
                 //     static fn() => __('moonshine::ui.resource.role_title'),
                 //     MoonShineUserRoleResource::class
                 // ),
-            ]),
+            ])->icon('cog-6-tooth'),
             //...parent::menu(),
 
         ];
