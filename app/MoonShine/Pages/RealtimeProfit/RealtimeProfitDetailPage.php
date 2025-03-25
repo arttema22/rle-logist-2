@@ -5,43 +5,23 @@ declare(strict_types=1);
 namespace App\MoonShine\Pages\RealtimeProfit;
 
 use Throwable;
-use App\Models\User;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Text;
 use App\Enums\TypeFuelEnumCast;
-use MoonShine\UI\Fields\Hidden;
-use MoonShine\UI\Fields\Preview;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Fields\Position;
-use MoonShine\UI\Fields\Template;
-use MoonShine\UI\Fields\Textarea;
-use MoonShine\UI\Components\Modal;
-use Illuminate\Support\Facades\Auth;
-use MoonShine\UI\Collections\Fields;
-use MoonShine\UI\Components\Heading;
 use MoonShine\UI\Fields\StackFields;
 use MoonShine\UI\Components\Tabs\Tab;
-use Illuminate\Database\Eloquent\Model;
-use MoonShine\Support\Enums\FormMethod;
 use MoonShine\UI\Components\Layout\Box;
-use App\MoonShine\Pages\ClosePeriodPage;
-use MoonShine\UI\Components\FormBuilder;
-use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\Contracts\UI\FieldContract;
-use MoonShine\UI\Components\ActionButton;
 use App\MoonShine\Resources\RouteResource;
 use App\MoonShine\Resources\ProfitResource;
 use App\MoonShine\Resources\SalaryResource;
 use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
-use MoonShine\Laravel\TypeCasts\ModelCaster;
 use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\UI\Components\Layout\LineBreak;
 use App\MoonShine\Resources\RefillingResource;
-use App\MoonShine\Resources\Dir\DirCargoResource;
-use MoonShine\Laravel\DependencyInjection\Request;
-use App\MoonShine\Pages\DirCargo\DirCargoIndexPage;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
 
 class RealtimeProfitDetailPage extends DetailPage
@@ -298,32 +278,37 @@ class RealtimeProfitDetailPage extends DetailPage
             Tabs::make([
                 Tab::make('main', parent::mainLayer())
                     ->translatable('moonshine::ui.title'),
+
                 Tab::make('profits', [
                     Box::make([
                         $this->getResource()->getItem() ? $this->getProfitsField() : 'To add comments, save the article',
                     ]),
                 ])->translatable('moonshine::ui.title'),
+
                 Tab::make('salaries', [
                     Box::make([
                         $this->getResource()->getItem() ? $this->getSalariesField() : 'To add comments, save the article',
                     ]),
                 ])->translatable('moonshine::ui.title'),
+
                 Tab::make('refillings', [
                     Box::make([
                         $this->getResource()->getItem() ? $this->getRefillingsField() : 'To add comments, save the article',
                     ]),
                 ])->translatable('moonshine::ui.title'),
+
                 Tab::make('routes', [
                     Box::make([
                         $this->getResource()->getItem() ? $this->getRoutesField() : 'To add comments, save the article',
                     ]),
                 ])->translatable('moonshine::ui.title'),
+
                 Tab::make('services', [
                     Box::make([
                         $this->getResource()->getItem() ? $this->getServicesField() : 'To add comments, save the article',
                     ]),
                 ])->translatable('moonshine::ui.title'),
-            ]),
+            ])
         ];
     }
 

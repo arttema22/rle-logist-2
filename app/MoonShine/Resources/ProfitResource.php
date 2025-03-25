@@ -15,7 +15,7 @@ use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
-#[Icon('trophy')]
+#[Icon('scale')]
 class ProfitResource extends ModelResource
 {
     protected string $model = Profit::class;

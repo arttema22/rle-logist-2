@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use App\Models\User;
+use MoonShine\Support\Enums\JsEvent;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
@@ -26,6 +27,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
+use MoonShine\Support\AlpineJs;
 
 #[Icon('circle-stack')]
 class RealtimeProfitResource extends ModelResource

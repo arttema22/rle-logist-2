@@ -18,7 +18,7 @@ use MoonShine\UI\Fields\Json;
 use MoonShine\UI\Fields\Textarea;
 use MoonShine\UI\Fields\Url;
 
-#[Icon('trophy')]
+#[Icon('share')]
 class SetupIntegrationResource extends ModelResource
 {
     protected string $model = SetupIntegration::class;
