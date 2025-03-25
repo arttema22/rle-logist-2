@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use App\Models\User;
-use MoonShine\Support\Enums\JsEvent;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
-use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Hidden;
 use MoonShine\UI\Fields\Textarea;
 use MoonShine\UI\Components\Alert;
@@ -17,19 +15,16 @@ use Illuminate\Support\Facades\Auth;
 use MoonShine\UI\Components\Heading;
 use MoonShine\Support\Attributes\Icon;
 use Illuminate\Database\Eloquent\Model;
-use App\MoonShine\Pages\ClosePeriodPage;
 use MoonShine\UI\Components\FormBuilder;
 use MoonShine\UI\Components\ActionButton;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
-use MoonShine\Support\AlpineJs;
 
-#[Icon('circle-stack')]
+#[Icon('calculator')]
 class RealtimeProfitResource extends ModelResource
 {
 

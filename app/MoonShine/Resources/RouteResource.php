@@ -16,7 +16,7 @@ use App\MoonShine\Pages\Route\RouteDetailPage;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
-#[Icon('truck')]
+#[Icon('arrow-path-rounded-square')]
 class RouteResource extends ModelResource
 {
     protected string $model = Route::class;

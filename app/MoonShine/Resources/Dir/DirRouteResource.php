@@ -8,10 +8,12 @@ use App\Models\Dir\DirRoute;
 use MoonShine\Support\ListOf;
 use MoonShine\Laravel\Pages\Page;
 use MoonShine\Laravel\Enums\Action;
+use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirRoute\DirRouteFormPage;
 use App\MoonShine\Pages\DirRoute\DirRouteIndexPage;
 
+#[Icon('arrow-path-rounded-square')]
 class DirRouteResource extends ModelResource
 {
     protected string $model = DirRoute::class;

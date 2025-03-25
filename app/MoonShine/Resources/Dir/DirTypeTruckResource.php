@@ -7,10 +7,12 @@ namespace App\MoonShine\Resources\Dir;
 use MoonShine\Support\ListOf;
 use App\Models\Dir\DirTypeTruck;
 use MoonShine\Laravel\Enums\Action;
+use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirTypeTruck\DirTypeTruckFormPage;
 use App\MoonShine\Pages\DirTypeTruck\DirTypeTruckIndexPage;
 
+#[Icon('truck')]
 class DirTypeTruckResource extends ModelResource
 {
     protected string $model = DirTypeTruck::class;

@@ -8,10 +8,12 @@ use MoonShine\Support\ListOf;
 use MoonShine\Laravel\Pages\Page;
 use MoonShine\Laravel\Enums\Action;
 use App\Models\Dir\DirPetrolStation;
+use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirPetrolStation\DirPetrolStationFormPage;
 use App\MoonShine\Pages\DirPetrolStation\DirPetrolStationIndexPage;
 
+#[Icon('battery-50')]
 class DirPetrolStationResource extends ModelResource
 {
     protected string $model = DirPetrolStation::class;

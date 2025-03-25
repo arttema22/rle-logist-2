@@ -7,10 +7,12 @@ namespace App\MoonShine\Resources\Dir;
 use MoonShine\Support\ListOf;
 use App\Models\Dir\DirService;
 use MoonShine\Laravel\Enums\Action;
+use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirService\DirServiceFormPage;
 use App\MoonShine\Pages\DirService\DirServiceIndexPage;
 
+#[Icon('circle-stack')]
 class DirServiceResource extends ModelResource
 {
     protected string $model = DirService::class;
