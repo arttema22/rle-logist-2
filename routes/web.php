@@ -4,7 +4,10 @@ use App\Http\Controllers\RefillingController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\SalaryContriller;
 use App\MoonShine\Controllers\ClosePeriodController;
+use App\MoonShine\Resources\Driver\DriverSalaryResource;
+use App\MoonShine\Resources\SalaryResource;
 use Illuminate\Support\Facades\Route;
+use MoonShine\Laravel\Pages\Crud\IndexPage;
 
 Route::view('/', 'home')->name('home');
 
@@ -28,8 +31,10 @@ Route::name('salary.')
     ->group(function () {
         //Route::get('', SalaryManager::class)->name('list');
         Route::get('', [SalaryContriller::class, 'index'])->name('list');
-        // Route::get('/archive', [SalaryController::class, 'archive'])->name('archive');
-        // Route::get('/create', [SalaryController::class, 'create'])->name('create');
+        Route::get('test', [SalaryContriller::class, 'test'])->name('test');
+        Route::get('test2', [SalaryContriller::class, 'test2'])->name('test2');
+        Route::resource('test3', DriverSalaryResource::class);
+        // Route::get('/archive', [SalaryController::class, 'archive'])->name('archive');Contriller::class
         // Route::post('/store', [SalaryController::class, 'store'])->name('store');
         // Route::get('/edit/{id}', [SalaryController::class, 'edit'])->name('edit');
         // Route::post('/update/{id}', [SalaryController::class, 'update'])->name('update');

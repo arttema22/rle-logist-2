@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Salary;
 
-use App\MoonShine\Resources\UserResource;
 use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Textarea;
+use ForestLynx\MoonShine\Fields\Decimal;
+use MoonShine\UI\Components\Layout\Flex;
+use App\MoonShine\Resources\UserResource;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
-use MoonShine\UI\Components\Layout\Flex;
-use MoonShine\UI\Fields\Textarea;
 
 class SalaryFormPage extends FormPage
 {

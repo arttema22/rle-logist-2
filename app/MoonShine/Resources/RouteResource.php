@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use App\Models\Route;
+use App\Models\RouteBilling;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
+use App\Models\Dir\DirTypeTruck;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
@@ -45,10 +47,10 @@ class RouteResource extends ModelResource
         return parent::activeActions()
             ->except(
                 Action::MASS_DELETE,
-                Action::CREATE,
-                Action::VIEW,
-                Action::UPDATE,
-                Action::DELETE
+                //Action::CREATE,
+                //  Action::VIEW,
+                //Action::UPDATE,
+                //Action::DELETE
             );
     }
 
@@ -63,7 +65,10 @@ class RouteResource extends ModelResource
 
     protected function rules(mixed $item): array
     {
-        return [];
+        return [
+            'date' => ['required', 'date', 'before_or_equal:today'],
+            'dir_type_trucks_id' => ['required'],
+        ];
     }
     protected function filters(): iterable
     {
@@ -114,9 +119,49 @@ class RouteResource extends ModelResource
     //     ];
     // }
 
+    protected bool $isAsync = false;
+
     protected function beforeCreating(mixed $item): mixed
     {
-        $item->owner_id = Auth::user()->id;
+        $routeBilling = RouteBilling::find(request()->input('route'));
+        $val_type_truck = request()->input('dir_type_trucks_id');
+        request()->request->remove('route');
+
+        // dd(request()->request);
+
+        // dd($val_type_truck);
+
+        $routeBilling->is_static ? $route_length = 0 : $route_length = $routeBilling->length;
+
+        // расчет цены маршрута
+        if ($routeBilling->is_static) {
+            $price_route = $routeBilling->price;
+        } else {
+            $length = $routeBilling->length;
+            $tariff = DirTypeTruck::find($val_type_truck)->tariffs()
+                ->where('start', '<=', $length)
+                ->where('end', '>=', $length)->first();
+            $tariff->type_calculation ? $price_route = $tariff->price * $length
+                : $price_route = $tariff->price;
+        }
+
+        $price_route = $price_route * request()->input('number_trips');
+
+        //dd(request()->input('route'));
+        //dd($routeBilling);
+
+        request()->merge([
+            'address_loading' => $routeBilling->start,
+            'address_unloading' => $routeBilling->finish,
+            'route_length' => $route_length,
+            'price_route' => $price_route,
+        ]);
+
+        // $item->owner_id = Auth::user()->id;
+        //$item->address_loading = $routeBilling->start;
+
+        // dd(request()->request);
+
         return $item;
     }
 }

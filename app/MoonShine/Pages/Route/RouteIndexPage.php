@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Route;
 
-use App\MoonShine\Resources\Dir\DirServiceResource;
-use App\MoonShine\Resources\ServiceResource;
 use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Number;
+use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
+use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use App\MoonShine\Resources\Dir\DirServiceResource;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
-use MoonShine\UI\Fields\Number;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class RouteIndexPage extends IndexPage
 {
@@ -31,11 +32,19 @@ class RouteIndexPage extends IndexPage
             Text::make('payer', 'payer.title')->translatable('moonshine::ui.field'),
             Text::make('address_loading')->translatable('moonshine::ui.field')->sortable(),
             Text::make('address_unloading')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('length', 'route_length')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('price', 'price_route')->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('length', 'route_length')
+                ->unit('unit', ['км.'])->unitDefault(0)->precision(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('price', 'price_route')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make('number_trips', 'number_trips')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('unexpected_expenses', 'unexpected_expenses')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('summ_route', 'summ_route')->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('unexpected_expenses')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('summ_route')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make('comment')->translatable('moonshine::ui.field'),
             Date::make('created_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Date::make('updated_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),

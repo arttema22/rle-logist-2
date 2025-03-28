@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    public function service()
+    public function dirService()
     {
-        return $this->belongsTo(DirService::class);
+        return $this->belongsTo(DirService::class, 'service_id');
     }
 }

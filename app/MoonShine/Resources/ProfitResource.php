@@ -11,6 +11,7 @@ use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\UI\Components\Layout\Box;
+use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
@@ -49,14 +50,30 @@ class ProfitResource extends ModelResource
             Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Text::make('title')->translatable('moonshine::ui.field'),
             Text::make('driver', 'driver.profile.SurnameInitials')->translatable('moonshine::ui.field'),
-            Text::make('saldo_start')->translatable('moonshine::ui.field'),
-            Text::make('sum_salary')->translatable('moonshine::ui.field'),
-            Text::make('sum_refuelings')->translatable('moonshine::ui.field'),
-            Text::make('sum_routes')->translatable('moonshine::ui.field'),
-            Text::make('sum_services')->translatable('moonshine::ui.field'),
-            Text::make('sum_accrual')->translatable('moonshine::ui.field'),
-            Text::make('sum_amount')->translatable('moonshine::ui.field'),
-            Text::make('saldo_end')->translatable('moonshine::ui.field'),
+            Decimal::make('saldo_start')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_salary')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_refuelings')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_routes')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_services')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_accrual')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('sum_amount')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('saldo_end')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make('comment')->translatable('moonshine::ui.field'),
             Date::make('created_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Date::make('updated_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
@@ -68,9 +85,7 @@ class ProfitResource extends ModelResource
      */
     protected function formFields(): iterable
     {
-        return [
-            Text::make('title')->translatable('moonshine::ui.field'),
-        ];
+        return [];
     }
 
     /**
@@ -78,9 +93,7 @@ class ProfitResource extends ModelResource
      */
     protected function detailFields(): iterable
     {
-        return [
-            Text::make('saldo_end')->translatable('moonshine::ui.field'),
-        ];
+        return [];
     }
 
     protected function rules(mixed $item): array

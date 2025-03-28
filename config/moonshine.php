@@ -75,7 +75,7 @@ return [
     ],
 
     // Layout, pages, forms
-    'layout' => App\MoonShine\Layouts\MoonShineLayout::class,
+    'layout' => App\MoonShine\Layouts\DriverLayout::class,
 
     'forms' => [
         'login' => LoginForm::class,

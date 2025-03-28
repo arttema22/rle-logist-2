@@ -6,12 +6,9 @@ namespace App\MoonShine\Resources;
 
 use App\Models\Salary;
 use MoonShine\Support\ListOf;
-use MoonShine\UI\Fields\Date;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
-use Illuminate\Database\Eloquent\Builder;
-use MoonShine\Laravel\QueryTags\QueryTag;
 use App\MoonShine\Pages\Salary\SalaryFormPage;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Salary\SalaryIndexPage;
@@ -79,7 +76,6 @@ class SalaryResource extends ModelResource
             )->nullable()
                 ->searchable()
                 ->translatable('moonshine::ui.field'),
-            Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field'),
         ];
     }
 

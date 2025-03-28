@@ -7,6 +7,7 @@ namespace App\MoonShine\Pages\RealtimeProfit;
 use Throwable;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Position;
+use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 
@@ -16,39 +17,31 @@ class RealtimeProfitIndexPage extends IndexPage
     {
         return [
             Position::make(),
-
             Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')
                 ->columnSelection(false),
-
-            Text::make('saldo_start', 'profit.saldo_end')
-                ->badge()
-                ->translatable('moonshine::ui.field'),
-
+            Decimal::make('saldo_start', 'profit.saldo_end')
+                ->unit('unit', ['руб.'])->unitDefault(0)->badge()
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make(
                 'salaries',
                 formatted: fn($item) => ($item->salaries_count != 0) ?
                     $item->salaries_count . ' - ' . $item->salaries_sum_salary : ''
-
             )->translatable('moonshine::ui.field'),
-
             Text::make(
                 'routes',
                 formatted: fn($item) => ($item->routes_count != 0) ?
                     $item->routes_count . ' - ' . $item->routes_sum_summ_route : ''
             )->translatable('moonshine::ui.field'),
-
             Text::make(
                 'refillings',
                 formatted: fn($item) => ($item->refillings_count != 0) ?
                     $item->refillings_count . ' - ' . $item->refillings_sum_cost_car_refueling : ''
             )->translatable('moonshine::ui.field'),
-
             Text::make(
                 'services',
                 formatted: fn($item) => ($item->services_count != 0) ?
                     $item->services_count . ' - ' . $item->services_sum_sum : ''
             )->translatable('moonshine::ui.field'),
-
             Text::make(
                 'turnover',
                 formatted: fn($item) => ($item->services_count != 0) ?
@@ -57,7 +50,6 @@ class RealtimeProfitIndexPage extends IndexPage
             )
                 ->badge()
                 ->translatable('moonshine::ui.field'),
-
             Text::make(
                 label: 'saldo_end',
                 formatted: function ($item) {

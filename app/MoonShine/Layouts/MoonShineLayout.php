@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
+use App\MoonShine\Resources\Driver\DriverSalaryResource;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
@@ -58,6 +59,17 @@ final class MoonShineLayout extends AppLayout
         ];
     }
 
+    protected function getFaviconComponent(): Favicon
+    {
+        return parent::getFaviconComponent()->customAssets([
+            'apple-touch' => 'favicon_path',
+            '32' => 'favicon_path',
+            '16' => 'favicon_path',
+            'safari-pinned-tab' => 'favicon_path',
+            'web-manifest' => 'favicon_path',
+        ]);
+    }
+
     protected function menu(): array
     {
         return [
@@ -90,6 +102,8 @@ final class MoonShineLayout extends AppLayout
                 //     MoonShineUserRoleResource::class
                 // ),
             ])->icon('cog-6-tooth'),
+
+            MenuItem::make('salaries', DriverSalaryResource::class)->translatable('moonshine::ui.title'),
             //...parent::menu(),
 
         ];

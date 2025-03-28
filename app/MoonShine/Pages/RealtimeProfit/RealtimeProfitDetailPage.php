@@ -9,6 +9,7 @@ use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Text;
 use App\Enums\TypeFuelEnumCast;
+use App\MoonShine\Resources\Dir\DirServiceResource;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Fields\Position;
 use MoonShine\UI\Fields\StackFields;
@@ -22,6 +23,7 @@ use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use App\MoonShine\Resources\RefillingResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
 
 class RealtimeProfitDetailPage extends DetailPage

@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Refilling;
 
-use Closure;
 use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Text;
 use App\Enums\TypeFuelEnumCast;
-use MoonShine\UI\Components\Alert;
-use App\MoonShine\Resources\UserResource;
+use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
-use App\MoonShine\Resources\RefillingResource;
-use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class RefillingIndexPage extends IndexPage
 {
@@ -28,9 +24,15 @@ class RefillingIndexPage extends IndexPage
         return [
             Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Text::make('driver', 'driver.profile.SurnameInitials')->translatable('moonshine::ui.field'),
-            Text::make('num_liters_car_refueling')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('price_car_refueling')->translatable('moonshine::ui.field')->sortable(),
-            Text::make('cost_car_refueling')->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('num_liters_car_refueling')
+                ->unit('unit', ['л.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('price_car_refueling')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('cost_car_refueling')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make('petrol_station', 'petrolStation.title')->translatable('moonshine::ui.field'),
             Enum::make('type', 'type_fuel')->attach(TypeFuelEnumCast::class)->sortable()->translatable('moonshine::ui.field'),
             Text::make('comment')->translatable('moonshine::ui.field'),

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Salary;
 
+use ForestLynx\MoonShine\Fields\Decimal;
 use Throwable;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
-use MoonShine\UI\Fields\Number;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 
@@ -19,7 +19,9 @@ class SalaryIndexPage extends IndexPage
         return [
             Date::make('date')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Text::make('driver', 'driver.profile.SurnameInitials')->translatable('moonshine::ui.field'),
-            Number::make('salary')->translatable('moonshine::ui.field')->sortable(),
+            Decimal::make('salary', 'salary')
+                ->unit('unit', ['руб.'])->unitDefault(0)
+                ->translatable('moonshine::ui.field')->sortable(),
             Text::make('comment')->translatable('moonshine::ui.field'),
             Date::make('created_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),
             Date::make('updated_at')->format('d.m.Y')->translatable('moonshine::ui.field')->sortable(),

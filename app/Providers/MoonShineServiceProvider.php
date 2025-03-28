@@ -27,6 +27,8 @@ use App\MoonShine\Resources\ProfitResource;
 use App\MoonShine\Resources\RealtimeProfitResource;
 use App\MoonShine\Resources\ProfileResource;
 use App\MoonShine\Resources\SetupIntegrationResource;
+use App\MoonShine\Pages\TestPage;
+use App\MoonShine\Resources\Driver\DriverSalaryResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -59,9 +61,11 @@ class MoonShineServiceProvider extends ServiceProvider
                 RealtimeProfitResource::class,
                 ProfileResource::class,
                 SetupIntegrationResource::class,
+                DriverSalaryResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
+                TestPage::class,
             ])
         ;
     }

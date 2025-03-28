@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
+use App\MoonShine\Filters\AllDateFilter;
+use Carbon\Carbon;
 use App\Models\User;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Hidden;
 use MoonShine\UI\Fields\Textarea;
+use Illuminate\Support\Facades\DB;
 use MoonShine\UI\Components\Alert;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +19,13 @@ use MoonShine\UI\Components\Heading;
 use MoonShine\Support\Attributes\Icon;
 use Illuminate\Database\Eloquent\Model;
 use MoonShine\UI\Components\FormBuilder;
+use App\MoonShine\Filters\DateUserFilter;
 use MoonShine\UI\Components\ActionButton;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use MoonShine\Laravel\Fields\Relationships\HasMany;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
 
@@ -36,7 +41,7 @@ class RealtimeProfitResource extends ModelResource
         'refillings',
         'salaries',
         'services',
-        //  'profit',
+        'profit',
     ];
 
     protected string $column = 'profile.SurnameInitials';
@@ -72,7 +77,6 @@ class RealtimeProfitResource extends ModelResource
             ->withSum('refillings', 'cost_car_refueling')
             ->withSum('salaries', 'salary')
             ->withSum('services', 'sum')
-            // ->with('profit')
         ;
     }
 
@@ -92,6 +96,34 @@ class RealtimeProfitResource extends ModelResource
     protected function rules(mixed $item): array
     {
         return [];
+    }
+
+    // protected bool $isAsync = false;
+
+    protected function filters(): iterable
+    {
+
+        //dd(Builder $q);
+        //$date = '2023-10-01'; // Укажите нужную дату
+        // $formattedDate = Carbon::createFromFormat('Y-m-d', '2024-02-01');
+
+        // $salaries = DB::table('salaries')->where('date', '<=', $formattedDate)->get();
+        // dd($salaries);
+
+        return [
+            // new AllDateFilter(),
+            // Date::make('date')->onApply(
+            //     fn(Builder $q) =>
+            //     $q->dd() //whereExists($salaries)->dd()
+            //  $q->where()
+            //            ),
+            //Date::make('test', 'salaries.date'),
+            // HasMany::make('salaries', 'salaries', resource: SalaryResource::class)
+            //     ->fields([
+            //         Date::make('test', 'date'),
+            //     ]),
+
+        ];
     }
 
     protected function modifyDetailButton(ActionButtonContract $button): ActionButtonContract
