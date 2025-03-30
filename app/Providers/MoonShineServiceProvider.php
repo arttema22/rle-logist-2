@@ -29,6 +29,10 @@ use App\MoonShine\Resources\ProfileResource;
 use App\MoonShine\Resources\SetupIntegrationResource;
 use App\MoonShine\Pages\TestPage;
 use App\MoonShine\Resources\Driver\DriverSalaryResource;
+use App\MoonShine\Pages\ProfilePage;
+use App\MoonShine\Pages\LoginPage;
+use App\MoonShine\Pages\ForgotPage;
+use App\MoonShine\Pages\ResetPasswordPage;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -66,6 +70,10 @@ class MoonShineServiceProvider extends ServiceProvider
             ->pages([
                 ...$config->getPages(),
                 TestPage::class,
+                ProfilePage::class,
+                LoginPage::class,
+                ForgotPage::class,
+                ResetPasswordPage::class,
             ])
         ;
     }

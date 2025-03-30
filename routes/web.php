@@ -21,6 +21,8 @@ Route::view('profile', 'profile')
 
 require __DIR__ . '/auth.php';
 
+require __DIR__ . '/driver.php';
+
 require __DIR__ . '/moonshine.php';
 
 // Группа Выплаты

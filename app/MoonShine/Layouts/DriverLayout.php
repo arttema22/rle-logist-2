@@ -33,10 +33,16 @@ use MoonShine\UI\Components\{
     When
 };
 use App\MoonShine\Resources\Driver\DriverSalaryResource;
+use MoonShine\Laravel\Components\Fragment;
 use MoonShine\MenuManager\MenuItem;
 
 final class DriverLayout extends AppLayout
 {
+    protected function getHomeUrl(): string
+    {
+        return route('home');
+    }
+
     protected function assets(): array
     {
         return [
@@ -61,6 +67,8 @@ final class DriverLayout extends AppLayout
             //  MenuItem::make('salaries', SalaryResource::class)->translatable('moonshine::ui.title'),
             // ...parent::menu(),
 
+            ['label' => 'Dashboard', 'url' => route('salary.test2')],
+
             MenuItem::make('salaries', DriverSalaryResource::class)->translatable('moonshine::ui.title'),
         ];
     }
@@ -73,6 +81,11 @@ final class DriverLayout extends AppLayout
         parent::colors($colorManager);
 
         // $colorManager->primary('#00000');
+    }
+
+    protected function getProfileComponent(bool $sidebar = false): Profile
+    {
+        return Profile::make(route('profile'), route('logout'), withBorder: $sidebar);
     }
 
     protected function getFooterCopyright(): string
@@ -94,24 +107,28 @@ final class DriverLayout extends AppLayout
 
     public function build(): Layout
     {
-        // return parent::build();
         return Layout::make([
             Html::make([
                 $this->getHeadComponent(),
 
                 Body::make([
                     Wrapper::make([
-                        Div::make([
-                            Flash::make(),
+                        $this->getTopBarComponent(),
+                        // $this->getSidebarComponent(),
 
-                            Content::make([
-                                Components::make(
-                                    $this->getPage()->getComponents()
-                                ),
-                            ]),
-                        ])->class('layout-page'),
+                        Div::make([
+                            Fragment::make([
+                                Flash::make(),
+
+                                $this->getHeaderComponent(),
+
+                                Content::make($this->getContentComponents()),
+
+                                $this->getFooterComponent(),
+                            ])->class('layout-page')->name(self::CONTENT_FRAGMENT_NAME),
+                        ])->class('flex grow overflow-auto')->customAttributes(['id' => self::CONTENT_ID]),
                     ]),
-                ])->class('theme-minimalistic'),
+                ]),
             ])
                 ->customAttributes([
                     'lang' => $this->getHeadLang(),

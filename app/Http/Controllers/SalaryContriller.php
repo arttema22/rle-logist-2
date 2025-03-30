@@ -23,9 +23,9 @@ class SalaryContriller extends Controller
 
         return $page;
     }
-    public function test2(DriverSalaryIndexPage $page): DriverSalaryIndexPage
+    public function test2(DriverSalaryIndexPage $page, DriverSalaryResource $resource)
     {
-        return $page->loaded();
+        return $page->simulateRoute($page, $resource)->loaded();
     }
 
     /**
