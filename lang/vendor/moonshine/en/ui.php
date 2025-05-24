@@ -151,11 +151,14 @@ return [
         'refillings' => 'Refillings',
         'turnover' =>  'Turnover',
         'services' => 'Services',
+        'truck' => 'Truck',
     ],
 
     'title' => [
         'directory' => 'Directory',
         'typetrucks' => 'Type Trucks',
+        'brandtrucks' => 'Brand Trucks',
+        'trucks' => 'Trucks',
         'cargos' => 'Cargos',
         'services' => 'Services',
         'payers' => 'Payers',

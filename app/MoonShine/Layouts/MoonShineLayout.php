@@ -49,6 +49,8 @@ use App\MoonShine\Resources\RouteResource;
 use App\MoonShine\Resources\ProfitResource;
 use App\MoonShine\Resources\RealtimeProfitResource;
 use App\MoonShine\Resources\SetupIntegrationResource;
+use App\MoonShine\Resources\Dir\DirTruckBrandResource;
+use App\MoonShine\Resources\Sys\TruckResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -84,6 +86,8 @@ final class MoonShineLayout extends AppLayout
 
                 MenuGroup::make('directory', [
                     MenuItem::make('drivers', UserResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('trucks', TruckResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('brandtrucks', DirTruckBrandResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('typetrucks', DirTypeTruckResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('cargos', DirCargoResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('payers', DirPayerResource::class)->translatable('moonshine::ui.title'),

@@ -151,11 +151,14 @@ return [
         'refillings' => 'Заправки',
         'turnover' =>  'Обороты',
         'services' => 'Услуги',
+        'truck' => 'Авто',
     ],
 
     'title' => [
         'directory' => 'Справочники',
         'typetrucks' => 'Типы авто',
+        'brandtrucks' => 'Марки авто',
+        'trucks' => 'Автомобили',
         'cargos' => 'Грузы',
         'services' => 'Услуги',
         'payers' => 'Плательщики',

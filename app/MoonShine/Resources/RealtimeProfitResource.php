@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use App\MoonShine\Filters\AllDateFilter;
-use Carbon\Carbon;
 use App\Models\User;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Hidden;
 use MoonShine\UI\Fields\Textarea;
-use Illuminate\Support\Facades\DB;
 use MoonShine\UI\Components\Alert;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +16,11 @@ use MoonShine\UI\Components\Heading;
 use MoonShine\Support\Attributes\Icon;
 use Illuminate\Database\Eloquent\Model;
 use MoonShine\UI\Components\FormBuilder;
-use App\MoonShine\Filters\DateUserFilter;
 use MoonShine\UI\Components\ActionButton;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Contracts\UI\ActionButtonContract;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use MoonShine\Laravel\Fields\Relationships\HasMany;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitIndexPage;
 use App\MoonShine\Pages\RealtimeProfit\RealtimeProfitDetailPage;
 

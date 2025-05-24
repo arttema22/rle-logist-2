@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\User;
 
-use App\Models\Profile;
 use Throwable;
 use App\Models\User;
+use App\Models\Profile;
+use App\Models\Sys\Truck;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Email;
+use MoonShine\UI\Fields\Field;
 use MoonShine\UI\Fields\Password;
 use MoonShine\UI\Fields\Template;
 use MoonShine\UI\Components\Collapse;
@@ -20,6 +22,9 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use App\MoonShine\Resources\ProfileResource;
 use MoonShine\Contracts\UI\ComponentContract;
+use App\MoonShine\Resources\Sys\TruckResource;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class UserFormPage extends FormPage
 {
@@ -61,6 +66,15 @@ class UserFormPage extends FormPage
                         ], $value);
                         return $item;
                     }),
+
+                BelongsTo::make(
+                    'truck',
+                    'truck',
+                    resource: TruckResource::class,
+                    formatted: fn($item) => "$item->reg_num_ru $item->name"
+                )->nullable()->searchable(),
+                //->valuesQuery(fn(Builder $query, Field $field) => $query->where('driver.id', true)),
+
             ]),
         ];
     }

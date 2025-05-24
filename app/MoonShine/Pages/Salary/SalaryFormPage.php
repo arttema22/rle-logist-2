@@ -29,7 +29,12 @@ class SalaryFormPage extends FormPage
                     formatted: 'profile.SurnameInitials',
                     resource: UserResource::class
                 )->translatable('moonshine::ui.field'),
-                Number::make('salary')->translatable('moonshine::ui.field'),
+                Number::make('salary')->required()
+                    ->default(100)
+                    ->min(100)->max(9999999.99)->step(0.01)
+                    ->suffix('руб.')
+                    ->buttons()
+                    ->translatable('moonshine::ui.field'),
             ]),
             Textarea::make('comment')->translatable('moonshine::ui.field'),
         ];

@@ -9,17 +9,23 @@ use MoonShine\Support\ListOf;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
+use MoonShine\Laravel\QueryTags\QueryTag;
+use MoonShine\Support\Enums\SortDirection;
 use App\MoonShine\Pages\Salary\SalaryFormPage;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Salary\SalaryIndexPage;
 use App\MoonShine\Pages\Salary\SalaryDetailPage;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\UI\Components\Metrics\Wrapped\ValueMetric;
 
 #[Icon('trophy')]
 class SalaryResource extends ModelResource
 {
 
     protected string $model = Salary::class;
+
+    protected bool $withPolicy = true;
 
     public function getTitle(): string
     {
@@ -44,9 +50,14 @@ class SalaryResource extends ModelResource
     {
         return parent::activeActions()
             ->except(
-                Action::MASS_DELETE
+                Action::MASS_DELETE,
+                Action::VIEW
             );
     }
+
+    protected string $sortColumn = 'date';
+
+    protected SortDirection $sortDirection = SortDirection::DESC;
 
     protected function pages(): array
     {
@@ -61,7 +72,7 @@ class SalaryResource extends ModelResource
     {
         return [
             'date' => ['required', 'date', 'before_or_equal:today'],
-            'salary' => ['required'],
+            'salary' => ['required', 'decimal:0,2', 'min:10', 'max:9999999.99'],
         ];
     }
 
@@ -81,27 +92,43 @@ class SalaryResource extends ModelResource
 
     protected function search(): array
     {
-        return ['date', 'driver.profile.SurnameInitials', 'salary', 'comment'];
+        return ['date', 'salary', 'comment'];
     }
 
-    // protected function queryTags(): array
-    // {
-    //     return [
-    //         QueryTag::make(
-    //             __('moonshine::ui.button.active'),
-    //             fn(Builder $query) => $query->where('profit_id', '=', 0)
-    //         )->alias('active')
-    //             ->default(),
-    //         QueryTag::make(
-    //             __('moonshine::ui.button.archive'),
-    //             fn(Builder $query) => $query->where('profit_id', '!=', 0)
-    //         )->alias('archive'),
-    //     ];
-    // }
+    protected function queryTags(): array
+    {
+        return [
+            QueryTag::make(
+                __('moonshine::ui.button.active'),
+                fn(Builder $query) => $query->where('profit_id',  0)
+            )->alias('active')
+                ->default(),
+            QueryTag::make(
+                __('moonshine::ui.button.archive'),
+                fn(Builder $query) => $query->whereNot('profit_id', 0)
+            )->alias('archive'),
+        ];
+    }
 
     protected function beforeCreating(mixed $item): mixed
     {
         $item->owner_id = Auth::user()->id;
         return $item;
+    }
+
+    protected function metrics(): array
+    {
+        return [
+            ValueMetric::make('salaries')
+                ->value(Salary::where('profit_id',  0)->count())
+                ->columnSpan(2, 4)
+                ->translatable('moonshine::ui.title'),
+
+            ValueMetric::make('archive')
+                ->value(Salary::whereNot('profit_id',  0)->count())
+                ->columnSpan(2, 4)
+                ->translatable('moonshine::ui.button'),
+
+        ];
     }
 }

@@ -1,23 +1,24 @@
 <?php
 
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
-use MoonShine\Laravel\Exceptions\MoonShineNotFoundException;
-use MoonShine\Laravel\Forms\FiltersForm;
+use App\MoonShine\Forms\MyFiltersForm;
 use MoonShine\Laravel\Forms\LoginForm;
-use MoonShine\Laravel\Http\Middleware\Authenticate;
-use MoonShine\Laravel\Http\Middleware\ChangeLocale;
-use MoonShine\Laravel\Layouts\AppLayout;
-use MoonShine\Laravel\Models\MoonshineUser;
 use MoonShine\Laravel\Pages\Dashboard;
 use MoonShine\Laravel\Pages\ErrorPage;
 use MoonShine\Laravel\Pages\LoginPage;
+use MoonShine\Laravel\Forms\FiltersForm;
+use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\Laravel\Pages\ProfilePage;
+use MoonShine\Laravel\Models\MoonshineUser;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use MoonShine\Laravel\Http\Middleware\Authenticate;
+use MoonShine\Laravel\Http\Middleware\ChangeLocale;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use MoonShine\Laravel\Exceptions\MoonShineNotFoundException;
 
 return [
     'title' => env('MOONSHINE_TITLE', 'MoonShine'),
@@ -26,7 +27,7 @@ return [
 
 
     // Default flags
-    'use_migrations' => true,
+    'use_migrations' => false,
     'use_notifications' => true,
     'use_database_notifications' => true,
 
@@ -75,11 +76,12 @@ return [
     ],
 
     // Layout, pages, forms
-    'layout' => App\MoonShine\Layouts\DriverLayout::class,
+    'layout' => App\MoonShine\Layouts\MoonShineLayout::class,
 
     'forms' => [
         'login' => LoginForm::class,
-        'filters' => FiltersForm::class,
+        //'filters' => FiltersForm::class,
+        'filters' => MyFiltersForm::class,
     ],
 
     'pages' => [

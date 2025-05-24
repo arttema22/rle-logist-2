@@ -22,7 +22,6 @@ class RefillingResource extends ModelResource
 {
     protected string $model = Refilling::class;
 
-
     protected bool $withPolicy = true;
 
     public function getTitle(): string
@@ -53,6 +52,7 @@ class RefillingResource extends ModelResource
     }
 
     protected string $sortColumn = 'date';
+
     protected SortDirection $sortDirection = SortDirection::DESC;
 
     protected function pages(): array
