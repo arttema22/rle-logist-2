@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
+use App\Models\Sys\Truck;
 use App\Models\User;
 use MoonShine\Support\ListOf;
 use Illuminate\Validation\Rule;
@@ -93,4 +94,11 @@ class UserResource extends ModelResource
 
     //     return $item;
     // }
+
+    protected function afterUpdated(mixed $item): mixed
+    {
+        $test = Truck::find($item->truck_id);
+
+        return $item;
+    }
 }
