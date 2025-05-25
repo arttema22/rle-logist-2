@@ -68,11 +68,15 @@ class UserResource extends ModelResource
                 'email',
                 Rule::unique('users')->ignoreModel($item),
             ],
-            'e1_card' => 'digits:19',
+            'e1_card' => 'nullable|digits:19',
             'password' => $item->exists
                 ? 'sometimes|nullable|min:6|required_with:password_repeat|same:password_repeat'
                 : 'required|min:6|required_with:password_repeat|same:password_repeat',
 
+            'truck_id' => [
+                'nullable',
+                Rule::unique('users')->ignoreModel($item),
+            ],
         ];
     }
 
