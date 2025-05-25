@@ -25,7 +25,7 @@ class Truck extends Model
         'reg_num_en',
         'brand_id',
         'type_id',
-        'driver_id',
+        'is_driver',
         'name'
     ];
 
@@ -34,10 +34,7 @@ class Truck extends Model
      *
      * @return BelongsTo
      */
-    // public function driver(): BelongsTo
-    // {
-    //     return $this->belongsTo(SysMoonshineUser::class, 'driver_id', 'id');
-    // }
+
 
     /**
      * refillings
@@ -67,7 +64,7 @@ class Truck extends Model
 
     public function driver()
     {
-        return $this->hasOne(User::class, 'driver_id');
+        return $this->hasOne(User::class, 'truck_id');
     }
 
     /**

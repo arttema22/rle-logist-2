@@ -82,23 +82,29 @@ class UserResource extends ModelResource
         return $item;
     }
 
-    // protected function afterCreated(mixed $item): mixed
-    // {
-    //     $item->profile()->create([
-    //         'last_name' => ' ',
-    //         'first_name' => ' ',
-    //         //  'sec_name' => '',
-    //         //  'phone' => '',
-    //         'status' => 1,
-    //     ]);
+    protected function afterCreated(mixed $item): mixed
+    {
+        Truck::find($item->truck_id)->update(['is_driver' => 1]);
+        return $item;
+    }
 
-    //     return $item;
-    // }
+    protected function beforeUpdating(mixed $item): mixed
+    {
+        if ($item->truck_id != null)
+            Truck::find($item->truck_id)->update(['is_driver' => 0]);
+        return $item;
+    }
 
     protected function afterUpdated(mixed $item): mixed
     {
-        $test = Truck::find($item->truck_id);
+        if ($item->truck_id != null)
+            Truck::find($item->truck_id)->update(['is_driver' => 1]);
+        return $item;
+    }
 
+    protected function beforeDeleting(mixed $item): mixed
+    {
+        Truck::find($item->truck_id)->update(['is_driver' => 0]);
         return $item;
     }
 }

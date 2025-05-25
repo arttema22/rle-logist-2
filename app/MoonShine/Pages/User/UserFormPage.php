@@ -67,13 +67,14 @@ class UserFormPage extends FormPage
                         return $item;
                     }),
 
+                Text::make('truck.reg_num_ru')->translatable('moonshine::ui.field'),
                 BelongsTo::make(
                     'truck',
                     'truck',
                     resource: TruckResource::class,
                     formatted: fn($item) => "$item->reg_num_ru $item->name"
-                )->nullable()->searchable(),
-                //->valuesQuery(fn(Builder $query, Field $field) => $query->where('driver.id', true)),
+                )->nullable()->searchable()
+                    ->valuesQuery(fn(Builder $query, Field $field) => $query->where('is_driver', 0)),
 
             ]),
         ];
