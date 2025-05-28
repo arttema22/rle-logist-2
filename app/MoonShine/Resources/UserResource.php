@@ -85,30 +85,4 @@ class UserResource extends ModelResource
         $item->role_id = 2;
         return $item;
     }
-
-    protected function afterCreated(mixed $item): mixed
-    {
-        Truck::find($item->truck_id)->update(['is_driver' => 1]);
-        return $item;
-    }
-
-    protected function beforeUpdating(mixed $item): mixed
-    {
-        if ($item->truck_id != null)
-            Truck::find($item->truck_id)->update(['is_driver' => 0]);
-        return $item;
-    }
-
-    protected function afterUpdated(mixed $item): mixed
-    {
-        if ($item->truck_id != null)
-            Truck::find($item->truck_id)->update(['is_driver' => 1]);
-        return $item;
-    }
-
-    protected function beforeDeleting(mixed $item): mixed
-    {
-        Truck::find($item->truck_id)->update(['is_driver' => 0]);
-        return $item;
-    }
 }

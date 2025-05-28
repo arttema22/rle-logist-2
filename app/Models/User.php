@@ -5,12 +5,15 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Sys\Truck;
+use App\Models\Dir\DirTypeTruck;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
 {
@@ -62,6 +65,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Truck::class, 'truck_id');
     }
+
+    public function typeTruck(): HasOneThrough
+    {
+        return $this->hasOneThrough(DirTypeTruck::class, Truck::class, 'id', 'id', 'truck_id', 'type_id');
+    }
+
 
     public function salaries()
     {

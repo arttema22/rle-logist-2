@@ -7,6 +7,7 @@ namespace App\MoonShine\Pages\RealtimeProfit;
 use Throwable;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Position;
+use MoonShine\UI\Fields\Switcher;
 use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -22,6 +23,17 @@ class RealtimeProfitIndexPage extends IndexPage
             Decimal::make('saldo_start', 'profit.saldo_end')
                 ->unit('unit', ['руб.'])->unitDefault(0)->badge()
                 ->translatable('moonshine::ui.field')->sortable(),
+
+            Text::make(
+                'Количество пополнений',
+                formatted: fn($item) => ($item->refillings()->count())
+            ),
+            Text::make(
+                'Количество пополнений',
+                formatted: fn($item) => ($item->refillings()->sum('cost_car_refueling'))
+            ),
+            //->withSum('routes', 'summ_route')
+
             Text::make(
                 'salaries',
                 formatted: fn($item) => ($item->salaries_count != 0) ?
@@ -42,6 +54,9 @@ class RealtimeProfitIndexPage extends IndexPage
                 formatted: fn($item) => ($item->services_count != 0) ?
                     $item->services_count . ' - ' . $item->services_sum_sum : ''
             )->translatable('moonshine::ui.field'),
+
+            Switcher::make('services', 'typeTruck.is_service')->translatable('moonshine::ui.field'),
+
             Text::make(
                 'turnover',
                 formatted: fn($item) => ($item->services_count != 0) ?

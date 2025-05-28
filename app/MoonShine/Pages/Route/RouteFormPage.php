@@ -71,15 +71,17 @@ class RouteFormPage extends FormPage
                         ->nullable()
                         ->searchable()
                         ->translatable('moonshine::ui.field'),
-                    BelongsTo::make(
-                        'typetruck',
-                        'typeTruck',
-                        formatted: 'title',
-                        resource: DirTypeTruckResource::class
-                    )
-                        ->nullable()
-                        ->searchable()
-                        ->translatable('moonshine::ui.field'),
+
+                    // BelongsTo::make(
+                    //     'typetruck',
+                    //     'typeTruck',
+                    //     formatted: 'title',
+                    //     resource: DirTypeTruckResource::class
+                    // )
+                    //     ->nullable()
+                    //     ->searchable()
+                    //     ->translatable('moonshine::ui.field'),
+
                 ]),
 
                 Flex::make([

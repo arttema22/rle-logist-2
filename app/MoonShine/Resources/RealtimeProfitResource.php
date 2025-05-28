@@ -7,6 +7,7 @@ namespace App\MoonShine\Resources;
 use App\Models\User;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
+use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Hidden;
 use MoonShine\UI\Fields\Textarea;
 use MoonShine\UI\Components\Alert;
@@ -37,6 +38,7 @@ class RealtimeProfitResource extends ModelResource
         'salaries',
         'services',
         'profit',
+        'truck',
     ];
 
     protected string $column = 'profile.SurnameInitials';
@@ -61,19 +63,21 @@ class RealtimeProfitResource extends ModelResource
             );
     }
 
-    protected function modifyQueryBuilder(Builder $builder): Builder
-    {
-        return $builder
-            ->withCount('routes')
-            ->withCount('refillings')
-            ->withCount('salaries')
-            ->withCount('services')
-            ->withSum('routes', 'summ_route')
-            ->withSum('refillings', 'cost_car_refueling')
-            ->withSum('salaries', 'salary')
-            ->withSum('services', 'sum')
-        ;
-    }
+    //protected bool $isAsync = false;
+
+    // protected function modifyQueryBuilder(Builder $builder): Builder
+    // {
+    //     return $builder
+    //         ->withCount('routes')
+    //         ->withCount('refillings')
+    //         ->withCount('salaries')
+    //         ->withCount('services')
+    //         ->withSum('routes', 'summ_route')
+    //         ->withSum('refillings', 'cost_car_refueling')
+    //         ->withSum('salaries', 'salary')
+    //         ->withSum('services', 'sum')
+    //     ;
+    // }
 
     public function getTitle(): string
     {
@@ -118,6 +122,28 @@ class RealtimeProfitResource extends ModelResource
             //         Date::make('test', 'date'),
             //     ]),
 
+            // Date::make('date')->onApply(
+            //     fn(\Illuminate\Database\Eloquent\Builder $q, $value) =>
+            //     //$q->whereRelation('routes', 'date', '<=', $value)
+            //     //$q->routes()->where('date', '<=', $value)
+            //     $q->whereHas(
+            //         'routes',
+            //         function (Builder $q, $value) {
+            //             $q; //->where('date', '<=', $value);
+            //         }
+            //     )
+            // ),
+            // Date::make('Дата из Salary', 'date')
+            //     ->onApply(
+            //         fn($query, $value) => $query
+            //             ->whereHas('routes', fn($q) => $q->whereDate('date', '<=', $value))
+            //     ),
+
+            Date::make('Дата из Salary', 'date')
+                ->onApply(
+                    fn($query, $value) => $query
+                        ->routes()->where('date', '<=', $value)
+                ),
         ];
     }
 

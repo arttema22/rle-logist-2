@@ -24,6 +24,10 @@ class TruckResource extends ModelResource
 {
     protected string $model = Truck::class;
 
+    protected array $with = [
+        'type',
+    ];
+
     public function getTitle(): string
     {
         return __('moonshine::ui.title.trucks');
