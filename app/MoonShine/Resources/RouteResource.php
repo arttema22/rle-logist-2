@@ -8,14 +8,14 @@ use App\Models\Route;
 use App\Models\RouteBilling;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
-use App\Models\Dir\DirTypeTruck;
 use MoonShine\Laravel\Enums\Action;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Setup\SetupTypeTruck;
 use MoonShine\Support\Attributes\Icon;
 use App\MoonShine\Pages\Route\RouteFormPage;
 use App\MoonShine\Pages\Route\RouteIndexPage;
 use App\MoonShine\Pages\Route\RouteDetailPage;
 use MoonShine\Laravel\Resources\ModelResource;
+use App\MoonShine\Resources\Setup\UserResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 #[Icon('arrow-path-rounded-square')]
@@ -138,7 +138,7 @@ class RouteResource extends ModelResource
             $price_route = $routeBilling->price;
         } else {
             $length = $routeBilling->length;
-            $tariff = DirTypeTruck::find($val_type_truck)->tariffs()
+            $tariff = SetupTypeTruck::find($val_type_truck)->tariffs()
                 ->where('start', '<=', $length)
                 ->where('end', '>=', $length)->first();
             $tariff->type_calculation ? $price_route = $tariff->price * $length

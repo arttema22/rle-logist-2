@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Dir;
+namespace App\MoonShine\Resources\Setup;
 
-use App\Models\Dir\DirTariff;
+use App\Models\Setup\SetupTariff;
 use MoonShine\Support\ListOf;
 use MoonShine\Laravel\Pages\Page;
 
@@ -13,9 +13,9 @@ use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\DirTariff\DirTariffFormPage;
 use App\MoonShine\Pages\DirTariff\DirTariffIndexPage;
 
-class DirTariffResource extends ModelResource
+class SetupTariffResource extends ModelResource
 {
-    protected string $model = DirTariff::class;
+    protected string $model = SetupTariff::class;
 
     protected string $title = 'Dir/DirTariffs';
 

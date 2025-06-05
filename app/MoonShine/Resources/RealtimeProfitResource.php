@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use App\Models\User;
+use App\Models\Setup\User;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Hidden;
+use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Textarea;
+use MoonShine\Support\Enums\Layer;
 use MoonShine\UI\Components\Alert;
 use MoonShine\Laravel\Enums\Action;
 use Illuminate\Support\Facades\Auth;
@@ -65,19 +67,21 @@ class RealtimeProfitResource extends ModelResource
 
     //protected bool $isAsync = false;
 
-    // protected function modifyQueryBuilder(Builder $builder): Builder
-    // {
-    //     return $builder
-    //         ->withCount('routes')
-    //         ->withCount('refillings')
-    //         ->withCount('salaries')
-    //         ->withCount('services')
-    //         ->withSum('routes', 'summ_route')
-    //         ->withSum('refillings', 'cost_car_refueling')
-    //         ->withSum('salaries', 'salary')
-    //         ->withSum('services', 'sum')
-    //     ;
-    // }
+    protected function modifyQueryBuilder(Builder $builder): Builder
+    {
+        return $builder
+            // Отфильтровываем только водителей (без системной записи)
+            ->whereNotNull('truck_id');
+            //         ->withCount('routes')
+            //         ->withCount('refillings')
+            //         ->withCount('salaries')
+            //         ->withCount('services')
+            //         ->withSum('routes', 'summ_route')
+            //         ->withSum('refillings', 'cost_car_refueling')
+            //         ->withSum('salaries', 'salary')
+            //         ->withSum('services', 'sum')
+        ;
+    }
 
     public function getTitle(): string
     {
@@ -101,49 +105,31 @@ class RealtimeProfitResource extends ModelResource
 
     protected function filters(): iterable
     {
-
-        //dd(Builder $q);
-        //$date = '2023-10-01'; // Укажите нужную дату
-        // $formattedDate = Carbon::createFromFormat('Y-m-d', '2024-02-01');
-
-        // $salaries = DB::table('salaries')->where('date', '<=', $formattedDate)->get();
-        // dd($salaries);
+        $drivers = User::all();
 
         return [
-            // new AllDateFilter(),
-            // Date::make('date')->onApply(
-            //     fn(Builder $q) =>
-            //     $q->dd() //whereExists($salaries)->dd()
-            //  $q->where()
-            //            ),
-            //Date::make('test', 'salaries.date'),
-            // HasMany::make('salaries', 'salaries', resource: SalaryResource::class)
-            //     ->fields([
-            //         Date::make('test', 'date'),
-            //     ]),
 
-            // Date::make('date')->onApply(
-            //     fn(\Illuminate\Database\Eloquent\Builder $q, $value) =>
-            //     //$q->whereRelation('routes', 'date', '<=', $value)
-            //     //$q->routes()->where('date', '<=', $value)
-            //     $q->whereHas(
-            //         'routes',
-            //         function (Builder $q, $value) {
-            //             $q; //->where('date', '<=', $value);
-            //         }
-            //     )
-            // ),
-            // Date::make('Дата из Salary', 'date')
-            //     ->onApply(
-            //         fn($query, $value) => $query
-            //             ->whereHas('routes', fn($q) => $q->whereDate('date', '<=', $value))
-            //     ),
-
-            Date::make('Дата из Salary', 'date')
+            Date::make('date')
                 ->onApply(
-                    fn($query, $value) => $query
-                        ->routes()->where('date', '<=', $value)
-                ),
+                    function ($query, $value) {
+                        // Загружаем связанные данные по условию, но не фильтруем по ним
+                        $query->with([
+                            'salaries' => fn($q) => $q
+                                ->where('profit_id', 0)
+                                ->whereDate('date', '<=', $value),
+                            'refillings' => fn($q) => $q
+                                ->where('profit_id', 0)
+                                ->whereDate('date', '<=', $value),
+                            'routes' => fn($q) => $q
+                                ->where('profit_id', 0)
+                                ->whereDate('date', '<=', $value),
+                            'services' => fn($q) => $q
+                                ->where('profit_id', 0)
+                                ->whereDate('date', '<=', $value),
+                        ]);
+                        return $query;
+                    }
+                )->translatable('moonshine::ui.field'),
         ];
     }
 

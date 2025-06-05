@@ -2,27 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Dir;
+namespace App\MoonShine\Resources\Setup;
 
 use MoonShine\Support\ListOf;
-use App\Models\Dir\DirService;
+use App\Models\Setup\SetupRoute;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
-use App\MoonShine\Pages\DirService\DirServiceFormPage;
-use App\MoonShine\Pages\DirService\DirServiceIndexPage;
+use App\MoonShine\Pages\DirRoute\DirRouteFormPage;
+use App\MoonShine\Pages\DirRoute\DirRouteIndexPage;
 
-#[Icon('circle-stack')]
-class DirServiceResource extends ModelResource
+#[Icon('arrow-path-rounded-square')]
+class SetupRouteResource extends ModelResource
 {
-    protected string $model = DirService::class;
+    protected string $model = SetupRoute::class;
 
     public function getTitle(): string
     {
-        return __('moonshine::ui.title.services');
+        return __('moonshine::ui.title.routes');
     }
-
-    protected string $column = 'title';
 
     protected bool $createInModal = true;
 
@@ -37,8 +35,8 @@ class DirServiceResource extends ModelResource
     protected function pages(): array
     {
         return [
-            DirServiceIndexPage::class,
-            DirServiceFormPage::class,
+            DirRouteIndexPage::class,
+            DirRouteFormPage::class,
         ];
     }
 

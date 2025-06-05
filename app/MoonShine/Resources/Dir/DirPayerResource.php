@@ -7,11 +7,10 @@ namespace App\MoonShine\Resources\Dir;
 
 use App\Models\Dir\DirPayer;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
-use App\MoonShine\Pages\DirPayer\DirPayerFormPage;
-use App\MoonShine\Pages\DirPayer\DirPayerIndexPage;
 
 #[Icon('user-group')]
 class DirPayerResource extends ModelResource
@@ -27,19 +26,28 @@ class DirPayerResource extends ModelResource
 
     protected bool $createInModal = true;
 
+    protected bool $editInModal = true;
+
     protected function activeActions(): ListOf
     {
         return parent::activeActions()
             ->except(
-                Action::MASS_DELETE
+                Action::MASS_DELETE,
+                Action::VIEW
             );
     }
 
-    protected function pages(): array
+    protected function indexFields(): iterable
     {
         return [
-            DirPayerIndexPage::class,
-            DirPayerFormPage::class,
+            Text::make('title')->translatable('moonshine::ui.field')->sortable(),
+        ];
+    }
+
+    protected function formFields(): iterable
+    {
+        return [
+            Text::make('title', 'title')->translatable('moonshine::ui.field'),
         ];
     }
 

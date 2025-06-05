@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\DirTypeTrucks;
-use App\Models\Dir\DirTypeTruck;
+use App\Models\Setup\SetupTypeTruck;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,6 +16,6 @@ class RouteBilling extends Model
      */
     public function typeTruck()
     {
-        return $this->belongsTo(DirTypeTruck::class, 'type_truck_id', 'id');
+        return $this->belongsTo(SetupTypeTruck::class, 'type_truck_id', 'id');
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Sys;
+namespace App\MoonShine\Resources\Setup;
 
-use App\Models\Sys\Truck;
+use App\Models\Setup\Truck;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Select;
 use MoonShine\Laravel\Pages\Page;

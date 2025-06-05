@@ -14,6 +14,7 @@ use MoonShine\Support\Enums\SortDirection;
 use App\MoonShine\Pages\Salary\SalaryFormPage;
 use MoonShine\Laravel\Resources\ModelResource;
 use App\MoonShine\Pages\Salary\SalaryIndexPage;
+use App\MoonShine\Resources\Setup\UserResource;
 use App\MoonShine\Pages\Salary\SalaryDetailPage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;

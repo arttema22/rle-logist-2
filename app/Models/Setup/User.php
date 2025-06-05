@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Setup;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Sys\Truck;
-use App\Models\Dir\DirTypeTruck;
+use App\Models\Route;
+use App\Models\Profit;
+use App\Models\Salary;
+use App\Models\Service;
+use App\Models\Refilling;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
 {
@@ -68,7 +69,7 @@ class User extends Authenticatable
 
     public function typeTruck(): HasOneThrough
     {
-        return $this->hasOneThrough(DirTypeTruck::class, Truck::class, 'id', 'id', 'truck_id', 'type_id');
+        return $this->hasOneThrough(SetupTypeTruck::class, Truck::class, 'id', 'id', 'truck_id', 'type_id');
     }
 
 
@@ -89,7 +90,7 @@ class User extends Authenticatable
 
     public function services()
     {
-        return $this->hasMany(Service::class, 'driver_id')->where('status', 1);
+        return $this->hasMany(Service::class, 'driver_id')->where('profit_id', 0);
     }
 
     public function profits()

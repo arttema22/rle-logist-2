@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
-use App\MoonShine\Resources\Driver\DriverSalaryResource;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
@@ -35,22 +34,20 @@ use MoonShine\UI\Components\{
 };
 use MoonShine\MenuManager\MenuItem;
 use MoonShine\MenuManager\MenuGroup;
-use App\MoonShine\Resources\Dir\DirTypeTruckResource;
 use App\MoonShine\Resources\Dir\DirCargoResource;
 use App\MoonShine\Resources\Dir\DirPayerResource;
 use App\MoonShine\Resources\Dir\DirPetrolStationResource;
-use App\MoonShine\Resources\Dir\DirServiceResource;
-use App\MoonShine\Resources\Dir\DirRouteResource;
-use App\MoonShine\Resources\MoonShineUserResource;
+use App\MoonShine\Resources\RealtimeProfitResource;
+use App\MoonShine\Resources\Dir\DirTruckBrandResource;
+use App\MoonShine\Resources\Setup\SetupServiceResource;
+use App\MoonShine\Resources\Setup\SetupTypeTruckResource;
+use App\MoonShine\Resources\Setup\UserResource;
+use App\MoonShine\Resources\Setup\TruckResource;
+use App\MoonShine\Resources\Setup\SetupRouteResource;
 use App\MoonShine\Resources\SalaryResource;
-use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\RefillingResource;
 use App\MoonShine\Resources\RouteResource;
 use App\MoonShine\Resources\ProfitResource;
-use App\MoonShine\Resources\RealtimeProfitResource;
-use App\MoonShine\Resources\SetupIntegrationResource;
-use App\MoonShine\Resources\Dir\DirTruckBrandResource;
-use App\MoonShine\Resources\Sys\TruckResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -84,30 +81,34 @@ final class MoonShineLayout extends AppLayout
                 MenuItem::make('routes', RouteResource::class)->translatable('moonshine::ui.title'),
                 MenuItem::make('profits', ProfitResource::class)->translatable('moonshine::ui.title'),
 
-                MenuGroup::make('directory', [
+                MenuGroup::make('setup', [
+                    MenuItem::make('services', SetupServiceResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('typetrucks', SetupTypeTruckResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('drivers', UserResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('trucks', TruckResource::class)->translatable('moonshine::ui.title'),
-                    MenuItem::make('brandtrucks', DirTruckBrandResource::class)->translatable('moonshine::ui.title'),
-                    MenuItem::make('typetrucks', DirTypeTruckResource::class)->translatable('moonshine::ui.title'),
-                    MenuItem::make('cargos', DirCargoResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('routes', SetupRouteResource::class)->translatable('moonshine::ui.title'),
+                ])->translatable('moonshine::ui.title')->icon('queue-list'),
+
+                MenuGroup::make('directory', [
                     MenuItem::make('payers', DirPayerResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('cargos', DirCargoResource::class)->translatable('moonshine::ui.title'),
                     MenuItem::make('petrol_stations', DirPetrolStationResource::class)->translatable('moonshine::ui.title'),
-                    MenuItem::make('services', DirServiceResource::class)->translatable('moonshine::ui.title'),
-                    MenuItem::make('routes', DirRouteResource::class)->translatable('moonshine::ui.title'),
+                    MenuItem::make('brandtrucks', DirTruckBrandResource::class)->translatable('moonshine::ui.title'),
+
                 ])->translatable('moonshine::ui.title')->icon('queue-list'),
 
             ])->translatable('moonshine::ui.title')->icon('map'),
 
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
-                MenuItem::make('admins', MoonShineUserResource::class)->translatable('moonshine::ui.title'),
-                MenuItem::make(__('moonshine::ui.title.integrations'), SetupIntegrationResource::class),
+                // MenuItem::make('admins', MoonShineUserResource::class)->translatable('moonshine::ui.title'),
+                // MenuItem::make(__('moonshine::ui.title.integrations'), SetupIntegrationResource::class),
                 // MenuItem::make(
                 //     static fn() => __('moonshine::ui.resource.role_title'),
                 //     MoonShineUserRoleResource::class
                 // ),
             ])->icon('cog-6-tooth'),
 
-            MenuItem::make('salaries', DriverSalaryResource::class)->translatable('moonshine::ui.title'),
+            //         MenuItem::make('salaries', DriverSalaryResource::class)->translatable('moonshine::ui.title'),
             //...parent::menu(),
 
         ];

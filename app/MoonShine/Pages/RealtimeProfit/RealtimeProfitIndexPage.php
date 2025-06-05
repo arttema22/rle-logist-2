@@ -12,6 +12,8 @@ use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 
+use function PHPUnit\Framework\isEmpty;
+
 class RealtimeProfitIndexPage extends IndexPage
 {
     protected function fields(): iterable
@@ -20,67 +22,62 @@ class RealtimeProfitIndexPage extends IndexPage
             Position::make(),
             Text::make('name', 'profile.SurnameInitials')->translatable('moonshine::ui.field')
                 ->columnSelection(false),
-            Decimal::make('saldo_start', 'profit.saldo_end')
-                ->unit('unit', ['руб.'])->unitDefault(0)->badge()
+
+            // Decimal::make('saldo_start', 'profit.saldo_end')
+            //     ->unit('unit', ['руб.'])->unitDefault(0)->badge()
+            //     ->translatable('moonshine::ui.field')->sortable(),
+
+            Text::make('saldo_start', 'profit.saldo_end')
+                ->badge()
                 ->translatable('moonshine::ui.field')->sortable(),
 
             Text::make(
-                'Количество пополнений',
-                formatted: fn($item) => ($item->refillings()->count())
-            ),
-            Text::make(
-                'Количество пополнений',
-                formatted: fn($item) => ($item->refillings()->sum('cost_car_refueling'))
-            ),
-            //->withSum('routes', 'summ_route')
+                'salaries',
+                formatted: fn($item) => ($item->salaries->isNotEmpty()) ? $item->salaries->count() . ' - ' . $item->salaries->sum('salary') : ''
+            )->translatable('moonshine::ui.field'),
 
             Text::make(
-                'salaries',
-                formatted: fn($item) => ($item->salaries_count != 0) ?
-                    $item->salaries_count . ' - ' . $item->salaries_sum_salary : ''
-            )->translatable('moonshine::ui.field'),
-            Text::make(
                 'routes',
-                formatted: fn($item) => ($item->routes_count != 0) ?
-                    $item->routes_count . ' - ' . $item->routes_sum_summ_route : ''
+                formatted: fn($item) => ($item->routes->isNotEmpty()) ? $item->routes->count() . ' - ' . $item->routes->sum('summ_route') : ''
             )->translatable('moonshine::ui.field'),
+
             Text::make(
                 'refillings',
-                formatted: fn($item) => ($item->refillings_count != 0) ?
-                    $item->refillings_count . ' - ' . $item->refillings_sum_cost_car_refueling : ''
+                formatted: fn($item) => ($item->refillings->isNotEmpty()) ? $item->refillings->count() . ' - ' . $item->refillings->sum('cost_car_refueling') : ''
             )->translatable('moonshine::ui.field'),
+
             Text::make(
                 'services',
-                formatted: fn($item) => ($item->services_count != 0) ?
-                    $item->services_count . ' - ' . $item->services_sum_sum : ''
+                formatted: fn($item) => ($item->services->isNotEmpty()) ? $item->services->count() . ' - ' . $item->services->sum('sum') : ''
             )->translatable('moonshine::ui.field'),
 
             Switcher::make('services', 'typeTruck.is_service')->translatable('moonshine::ui.field'),
 
             Text::make(
                 'turnover',
-                formatted: fn($item) => ($item->services_count != 0) ?
-                    $item->routes_sum_summ_route + $item->services_sum_sum - $item->salaries_sum_salary :
-                    $item->routes_sum_summ_route - $item->refillings_sum_cost_car_refueling - $item->salaries_sum_salary
+                formatted: fn($item) => ($item->typeTruck->is_service) ?
+                    $item->routes->sum('summ_route') + $item->services->sum('sum') - $item->salaries->sum('salary') :
+                    $item->routes->sum('summ_route') - $item->refillings->sum('cost_car_refueling') - $item->salaries->sum('salary')
             )
                 ->badge()
                 ->translatable('moonshine::ui.field'),
+
             Text::make(
                 label: 'saldo_end',
                 formatted: function ($item) {
-                    if ($item->profit) {
-                        if ($item->services_count != 0) {
-                            return $item->profit->saldo_end + $item->routes_sum_summ_route + $item->services_sum_sum - $item->salaries_sum_salary;
-                        } else {
-                            return $item->profit->saldo_end + $item->routes_sum_summ_route - $item->refillings_sum_cost_car_refueling - $item->salaries_sum_salary;
-                        }
-                    } else {
-                        if ($item->services_count != 0) {
-                            return $item->routes_sum_summ_route + $item->services_sum_sum - $item->salaries_sum_salary;
-                        } else {
-                            return $item->routes_sum_summ_route - $item->refillings_sum_cost_car_refueling - $item->salaries_sum_salary;
-                        }
-                    }
+                    // У нового пользователя нет истории профитов, поэтому проверка на их наличие.
+                    // Если профиты есть, то получаем конечное сальдо последнего профита
+                    $res = ($item->profit) ? $item->profit->saldo_end : 0;
+                    // Если есть маршруты, то их сумму прибавляем к результату
+                    $res = ($item->routes) ? $res + $item->routes->sum('summ_route') : $res;
+                    // Если есть выплаты, то вычитаем их из результата
+                    $res = ($item->salaries) ? $res - $item->salaries->sum('salary') : $res;
+                    // Если есть услуги, то суммируем их по стоимости
+                    $service = ($item->services) ? $item->services->sum('sum') : 0;
+                    // Если пользователю разрешено оказывать услуги, то к результату прибавляем стоимость всех услуг
+                    // иначе из результата вычитаем сумму заправок
+                    $res = ($item->typeTruck->is_service) ? $res + $service : $res - $item->refillings->sum('cost_car_refueling');
+                    return $res;
                 }
             )
                 ->badge()

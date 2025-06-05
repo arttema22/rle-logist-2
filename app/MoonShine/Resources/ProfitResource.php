@@ -14,6 +14,7 @@ use MoonShine\UI\Components\Layout\Box;
 use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\Laravel\Resources\ModelResource;
+use App\MoonShine\Resources\Setup\UserResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 #[Icon('scale')]

@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Models\Dir;
+namespace App\Models\Setup;
 
-use App\Models\Sys\Truck;
+use App\Models\Setup\SetupTariff;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class DirTypeTruck extends Model
+class SetupTypeTruck extends Model
 {
+    protected $table = 'dir_type_trucks';
+
     public function tariffs(): HasMany
     {
-        return $this->hasMany(DirTariff::class);
+        return $this->hasMany(SetupTariff::class, 'dir_type_truck_id');
     }
 
     public function trucks()

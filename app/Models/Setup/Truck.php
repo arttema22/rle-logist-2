@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Models\Sys;
+namespace App\Models\Setup;
 
-use App\Models\User;
 use App\Models\Refilling;
-use App\Models\Dir\DirTruckType;
-use App\Models\Dir\DirTypeTruck;
 use App\Models\Dir\DirTruckBrand;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Sys\MoonshineUser as SysMoonshineUser;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -59,7 +54,7 @@ class Truck extends Model
      */
     public function type(): BelongsTo
     {
-        return $this->belongsTo(DirTypeTruck::class, 'type_id', 'id');
+        return $this->belongsTo(SetupTypeTruck::class, 'type_id', 'id');
     }
 
     public function driver()

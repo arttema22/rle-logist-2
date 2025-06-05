@@ -9,9 +9,10 @@ use MoonShine\UI\Fields\Date;
 use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Text;
 use App\Enums\TypeFuelEnumCast;
-use App\MoonShine\Resources\Dir\DirServiceResource;
 use MoonShine\UI\Components\Tabs;
+use MoonShine\UI\Fields\Fieldset;
 use MoonShine\UI\Fields\Position;
+use MoonShine\UI\Components\Heading;
 use MoonShine\UI\Fields\StackFields;
 use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Components\Layout\Box;
@@ -23,8 +24,9 @@ use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use App\MoonShine\Resources\RefillingResource;
-use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use App\MoonShine\Resources\Dir\DirServiceResource;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class RealtimeProfitDetailPage extends DetailPage
 {
@@ -35,75 +37,41 @@ class RealtimeProfitDetailPage extends DetailPage
     protected function fields(): iterable
     {
         return [
-            StackFields::make('name')->fields([
+            Fieldset::make('name')->fields([
                 Text::make('profile.last_name'),
-                Text::make('profile.first_name'),
-                Text::make('profile.sec_name'),
+                Text::make(
+                    'name',
+                    formatted: fn($item) => $item->profile->first_name . ' ' . $item->profile->sec_name
+                ),
             ])->translatable('moonshine::ui.field'),
 
             Text::make('saldo_start', 'profit.saldo_end')
                 ->badge()
                 ->translatable('moonshine::ui.field'),
 
-            StackFields::make('routes')->fields([
-                Text::make(
-                    'routes',
-                    'routes',
-                    formatted: fn($item) => $item->routes->count()
-                )->translatable('moonshine::ui.field'),
-                //LineBreak::make(),
-                Text::make(
-                    'routes',
-                    'routes',
-                    formatted: fn($item) => $item->routes->sum('summ_route')
-                )->translatable('moonshine::ui.field'),
-            ])->translatable('moonshine::ui.field'),
+            Text::make(
+                'routes',
+                formatted: fn($item) => $item->routes->count() . ' - ' . $item->routes->sum('summ_route')
+            )->translatable('moonshine::ui.field'),
 
-            StackFields::make('refillings')->fields([
-                Text::make(
-                    'refillings',
-                    'refillings',
-                    formatted: fn($item) => $item->refillings->count()
-                )->translatable('moonshine::ui.field'),
-                //LineBreak::make(),
-                Text::make(
-                    'refillings',
-                    'refillings',
-                    formatted: fn($item) => $item->refillings->sum('cost_car_refueling')
-                )->translatable('moonshine::ui.field'),
-            ])->translatable('moonshine::ui.field'),
+            Text::make(
+                'refillings',
+                formatted: fn($item) => $item->refillings->count() . ' - ' . $item->refillings->sum('cost_car_refueling')
+            )->translatable('moonshine::ui.field'),
 
-            StackFields::make('salaries')->fields([
-                Text::make(
-                    'salaries',
-                    'salaries',
-                    formatted: fn($item) => $item->salaries->count()
-                )->translatable('moonshine::ui.field'),
-                //LineBreak::make(),
-                Text::make(
-                    'salaries',
-                    'salaries',
-                    formatted: fn($item) => $item->salaries->sum('salary')
-                )->translatable('moonshine::ui.field'),
-            ])->translatable('moonshine::ui.field'),
+            Text::make(
+                'salaries',
+                formatted: fn($item) => $item->salaries->count() . ' - ' . $item->salaries->sum('salary')
+            )->translatable('moonshine::ui.field'),
 
-            StackFields::make('services')->fields([
-                Text::make(
-                    'services',
-                    'services',
-                    formatted: fn($item) => $item->services->count()
-                )->translatable('moonshine::ui.field'),
-                // LineBreak::make(),
-                Text::make(
-                    'services',
-                    'services',
-                    formatted: fn($item) => $item->services->sum('sum')
-                )->translatable('moonshine::ui.field'),
-            ])->translatable('moonshine::ui.field'),
+            Text::make(
+                'services',
+                formatted: fn($item) => $item->services->count() . ' - ' . $item->services->sum('sum')
+            )->translatable('moonshine::ui.field'),
 
             Text::make(
                 'turnover',
-                formatted: fn($item) => ($item->services->count() != 0) ?
+                formatted: fn($item) => ($item->typeTruck->is_service) ?
                     $item->routes->sum('summ_route') + $item->services->sum('sum') - $item->salaries->sum('salary') :
                     $item->routes->sum('summ_route') - $item->refillings->sum('cost_car_refueling') - $item->salaries->sum('salary')
             )->badge()
@@ -111,30 +79,30 @@ class RealtimeProfitDetailPage extends DetailPage
 
             Text::make(
                 'saldo_end',
-                'profit.saldo_end',
                 formatted: function ($item) {
-                    if ($item->profit) {
-                        if ($item->services->count() != 0) {
-                            return $item->profit->saldo_end + $item->routes->sum('summ_route') + $item->services->sum('sum') - $item->salaries->sum('salary');
-                        } else {
-                            return $item->profit->saldo_end + $item->routes->sum('summ_route') - $item->refillings->sum('cost_car_refueling') - $item->salaries->sum('salary');
-                        }
-                    } else {
-                        if ($item->services_count != 0) {
-                            return $item->routes->sum('summ_route') + $item->services->sum('sum') - $item->salaries->sum('salary');
-                        } else {
-                            return $item->routes->sum('summ_route') - $item->refillings->sum('cost_car_refueling') - $item->salaries->sum('salary');
-                        }
-                    }
+                    // У нового пользователя нет истории профитов, поэтому проверка на их наличие.
+                    // Если профиты есть, то получаем конечное сальдо последнего профита
+                    $res = ($item->profit) ? $item->profit->saldo_end : 0;
+                    // Если есть маршруты, то их сумму прибавляем к результату
+                    $res = ($item->routes) ? $res + $item->routes->sum('summ_route') : $res;
+                    // Если есть выплаты, то вычитаем их из результата
+                    $res = ($item->salaries) ? $res - $item->salaries->sum('salary') : $res;
+                    // Если есть услуги, то суммируем их по стоимости
+                    $service = ($item->services) ? $item->services->sum('sum') : 0;
+                    // Если пользователю разрешено оказывать услуги, то к результату прибавляем стоимость всех услуг
+                    // иначе из результата вычитаем сумму заправок
+                    $res = ($item->typeTruck->is_service) ? $res + $service : $res - $item->refillings->sum('cost_car_refueling');
+                    return $res;
                 }
             )->badge()
                 ->translatable('moonshine::ui.field'),
 
-            $this->getRoutesField(),
-            $this->getRefillingsField(),
-            $this->getSalariesField(),
-            $this->getServicesField(),
             $this->getProfitsField(),
+            $this->getSalariesField(),
+            $this->getRefillingsField(),
+            //$this->getRoutesField(),
+            // $this->getServicesField(),
+
         ];
     }
 
@@ -254,8 +222,9 @@ class RealtimeProfitDetailPage extends DetailPage
                 Text::make('comment')->translatable('moonshine::ui.field'),
             ])
             ->fillData($this->getResource()->getItem())
-            ->async()
-            ->creatable()
+            ->limit(1)
+            //->async()
+            //->creatable()
         ;
     }
 
@@ -283,7 +252,7 @@ class RealtimeProfitDetailPage extends DetailPage
 
                 Tab::make('profits', [
                     Box::make([
-                        $this->getResource()->getItem() ? $this->getProfitsField() : 'To add comments, save the article',
+                        $this->getResource()->getItem() ? $this->getProfitsField() : '!!!',
                     ]),
                 ])->translatable('moonshine::ui.title'),
 
@@ -299,17 +268,17 @@ class RealtimeProfitDetailPage extends DetailPage
                     ]),
                 ])->translatable('moonshine::ui.title'),
 
-                Tab::make('routes', [
-                    Box::make([
-                        $this->getResource()->getItem() ? $this->getRoutesField() : 'To add comments, save the article',
-                    ]),
-                ])->translatable('moonshine::ui.title'),
+                // Tab::make('routes', [
+                //     Box::make([
+                //         $this->getResource()->getItem() ? $this->getRoutesField() : 'To add comments, save the article',
+                //     ]),
+                // ])->translatable('moonshine::ui.title'),
 
-                Tab::make('services', [
-                    Box::make([
-                        $this->getResource()->getItem() ? $this->getServicesField() : 'To add comments, save the article',
-                    ]),
-                ])->translatable('moonshine::ui.title'),
+                // Tab::make('services', [
+                //     Box::make([
+                //         $this->getResource()->getItem() ? $this->getServicesField() : 'To add comments, save the article',
+                //     ]),
+                // ])->translatable('moonshine::ui.title'),
             ])
         ];
     }

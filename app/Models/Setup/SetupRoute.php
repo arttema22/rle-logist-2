@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Dir;
+namespace App\Models\Setup;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DirRoute extends Model
+class SetupRoute extends Model
 {
     protected $table = 'route_billings';
 }

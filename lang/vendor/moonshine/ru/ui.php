@@ -180,7 +180,8 @@ return [
         'main' => 'Основное',
         'realtime_profits' => 'Текущий расчет',
         'close_period' => 'Закрыть период',
-        'profits' => 'Сверка'
+        'profits' => 'Сверка',
+        'setup' => 'Настройки'
     ],
 
     'button' => [

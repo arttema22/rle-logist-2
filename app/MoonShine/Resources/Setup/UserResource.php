@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources;
+namespace App\MoonShine\Resources\Setup;
 
 use App\Models\Sys\Truck;
-use App\Models\User;
+use App\Models\Setup\User;
 use MoonShine\Support\ListOf;
 use Illuminate\Validation\Rule;
 use MoonShine\Laravel\Enums\Action;

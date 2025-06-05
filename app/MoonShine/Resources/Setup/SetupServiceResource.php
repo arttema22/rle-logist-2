@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Dir;
+namespace App\MoonShine\Resources\Setup;
 
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Number;
+use App\Models\Setup\SetupService;
 use MoonShine\Laravel\Enums\Action;
-use App\Models\Dir\DirPetrolStation;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
 
-#[Icon('battery-50')]
-class DirPetrolStationResource extends ModelResource
+#[Icon('circle-stack')]
+class SetupServiceResource extends ModelResource
 {
-    protected string $model = DirPetrolStation::class;
+    protected string $model = SetupService::class;
 
     public function getTitle(): string
     {
-        return __('moonshine::ui.title.petrol_stations');
+        return __('moonshine::ui.title.services');
     }
 
     protected string $column = 'title';
@@ -39,14 +40,16 @@ class DirPetrolStationResource extends ModelResource
     protected function indexFields(): iterable
     {
         return [
-            Text::make('title', 'title')->translatable('moonshine::ui.field')->sortable(),
+            Text::make('title')->translatable('moonshine::ui.field')->sortable(),
+            Number::make('price')->translatable('moonshine::ui.field')->sortable()->badge('info'),
         ];
     }
 
     protected function formFields(): iterable
     {
         return [
-            Text::make('title', 'title')->translatable('moonshine::ui.field'),
+            Text::make('title')->translatable('moonshine::ui.field'),
+            Number::make('price')->translatable('moonshine::ui.field'),
         ];
     }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\DirTariff;
 
+use App\MoonShine\Resources\Setup\SetupTypeTruckResource;
 use Throwable;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Switcher;
@@ -29,7 +30,7 @@ class DirTariffFormPage extends FormPage
             BelongsTo::make(
                 'typetruck',
                 'typetruck',
-                resource: DirTypeTruckResource::class
+                resource: SetupTypeTruckResource::class
             ),
         ];
     }

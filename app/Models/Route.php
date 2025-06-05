@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Service;
+use App\Models\Setup\User;
 use App\Models\Dir\DirCargo;
 use App\Models\Dir\DirPayer;
-use App\Models\Dir\DirTypeTruck;
+use App\Models\Setup\SetupTypeTruck;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -53,7 +54,7 @@ class Route extends Model
 
     public function typeTruck()
     {
-        return $this->belongsTo(DirTypeTruck::class, 'dir_type_trucks_id');
+        return $this->belongsTo(SetupTypeTruck::class, 'dir_type_trucks_id');
     }
 
     public function cargo()

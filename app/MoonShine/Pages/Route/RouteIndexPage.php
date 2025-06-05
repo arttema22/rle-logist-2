@@ -11,11 +11,10 @@ use MoonShine\UI\Fields\Number;
 use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
-use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Contracts\UI\ComponentContract;
-use App\MoonShine\Resources\Dir\DirServiceResource;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use App\MoonShine\Resources\Setup\SetupServiceResource;
 
 class RouteIndexPage extends IndexPage
 {
@@ -51,9 +50,9 @@ class RouteIndexPage extends IndexPage
             HasMany::make(
                 'service',
                 'services',
-                resource: ServiceResource::class
+                resource: SetupServiceResource::class
             )->fields([
-                BelongsTo::make('service', 'service', resource: DirServiceResource::class)
+                BelongsTo::make('service', 'service', resource: SetupServiceResource::class)
                     ->translatable('moonshine::ui.field'),
                 Number::make('price')->translatable('moonshine::ui.field'),
                 Number::make('number_operations')->translatable('moonshine::ui.field'),

@@ -2,7 +2,7 @@
 
 namespace App\Models\Dir;
 
-use App\Models\Sys\Truck;
+use App\Models\Setup\Truck;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;

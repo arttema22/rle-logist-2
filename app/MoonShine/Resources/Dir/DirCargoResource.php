@@ -6,11 +6,10 @@ namespace App\MoonShine\Resources\Dir;
 
 use App\Models\Dir\DirCargo;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Text;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\Laravel\Resources\ModelResource;
-use App\MoonShine\Pages\DirCargo\DirCargoFormPage;
-use App\MoonShine\Pages\DirCargo\DirCargoIndexPage;
 
 #[Icon('cube')]
 class DirCargoResource extends ModelResource
@@ -26,19 +25,28 @@ class DirCargoResource extends ModelResource
 
     protected bool $createInModal = true;
 
+    protected bool $editInModal = true;
+
     protected function activeActions(): ListOf
     {
         return parent::activeActions()
             ->except(
-                Action::MASS_DELETE
+                Action::MASS_DELETE,
+                Action::VIEW
             );
     }
 
-    protected function pages(): array
+    protected function indexFields(): iterable
     {
         return [
-            DirCargoIndexPage::class,
-            DirCargoFormPage::class,
+            Text::make('title', 'title')->translatable('moonshine::ui.field')->sortable(),
+        ];
+    }
+
+    protected function formFields(): iterable
+    {
+        return [
+            Text::make('title', 'title')->translatable('moonshine::ui.field'),
         ];
     }
 

@@ -180,7 +180,8 @@ return [
         'main' => 'Main',
         'realtime_profits' => 'Realtime Profits',
         'close_period' => 'Close Period',
-        'profits' => 'Profits'
+        'profits' => 'Profits',
+        'setup' => 'Setup'
     ],
 
     'button' => [

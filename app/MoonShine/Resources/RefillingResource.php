@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use MoonShine\Support\Attributes\Icon;
 use MoonShine\Support\Enums\SortDirection;
 use MoonShine\Laravel\Resources\ModelResource;
+use App\MoonShine\Resources\Setup\UserResource;
 use App\MoonShine\Pages\Refilling\RefillingFormPage;
 use App\MoonShine\Pages\Refilling\RefillingIndexPage;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;

@@ -10,10 +10,10 @@ use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Textarea;
 use ForestLynx\MoonShine\Fields\Decimal;
 use MoonShine\UI\Components\Layout\Flex;
-use App\MoonShine\Resources\UserResource;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
+use App\MoonShine\Resources\Setup\UserResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 class SalaryFormPage extends FormPage
